@@ -138,6 +138,9 @@
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\NavMenuItem.cs" />
+    <Compile Include="Objects\Operations.cs" />
+    <Compile Include="Objects\OperationsCategories.cs" />
+    <Compile Include="Objects\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +199,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
       <Version>3.1.25</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <Version>3.1.25</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
       <Version>3.1.25</Version>

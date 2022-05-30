@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlanner.Constants
 {
-    internal class ProgPathes
+    public class ProgPathes
     {
         public static string DataFolderPath
         {
