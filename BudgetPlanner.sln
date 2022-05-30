@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlanner", "BudgetPlanner\BudgetPlanner.csproj", "{B991491C-3418-400D-BD60-42FE4837F11F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM.ActiveCfg = Debug|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM.Build.0 = Debug|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM.Deploy.0 = Debug|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM64.Build.0 = Debug|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x64.ActiveCfg = Debug|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x64.Build.0 = Debug|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x64.Deploy.0 = Debug|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x86.ActiveCfg = Debug|x86
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x86.Build.0 = Debug|x86
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Debug|x86.Deploy.0 = Debug|x86
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM.ActiveCfg = Release|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM.Build.0 = Release|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM.Deploy.0 = Release|ARM
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM64.ActiveCfg = Release|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM64.Build.0 = Release|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|ARM64.Deploy.0 = Release|ARM64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x64.ActiveCfg = Release|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x64.Build.0 = Release|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x64.Deploy.0 = Release|x64
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x86.ActiveCfg = Release|x86
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x86.Build.0 = Release|x86
+		{B991491C-3418-400D-BD60-42FE4837F11F}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A35ECBD-1041-4065-866B-4DFBE35EEFA9}
+	EndGlobalSection
+EndGlobal
