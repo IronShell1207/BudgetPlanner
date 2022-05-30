@@ -2,6 +2,18 @@
     x:Class="BudgetPlanner.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:common="using:BudgetPlanner.Common"
     xmlns:local="using:BudgetPlanner">
-
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Infrastructure/Libs/AssetsLib.xaml"/>
+                <ResourceDictionary Source="Infrastructure/Styles/NavToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="Infrastructure/Styles/NavMenuItemContainerStyle.xaml"/>
+                <ResourceDictionary Source="Infrastructure/Styles/ColorsTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
