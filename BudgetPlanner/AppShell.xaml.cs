@@ -29,11 +29,16 @@ namespace BudgetPlanner
         public static AppShell Current = null;
         public MainVM MViewModel => this.DataContext as MainVM;
         public Frame AppFrame => AppShellFrame;
+
         public AppShell()
         {
             this.InitializeComponent();
             Current = this;
             MenuCList.SelectedIndex = 0;
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+
+            }
         }
 
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)

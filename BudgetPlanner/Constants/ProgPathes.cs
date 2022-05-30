@@ -13,7 +13,7 @@ namespace BudgetPlanner.Constants
         {
             get
             {
-                var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\BudgetPlannetIrs\";
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
                 return path;

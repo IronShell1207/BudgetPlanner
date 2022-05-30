@@ -17,7 +17,9 @@ namespace BudgetPlanner.Objects
         /// </summary>
         public bool Type { get; set; }
         public string Comment { get; set; }
+        public DateTime DateTime { get; set; }
         public int UserId { get; set; }
+
         public User User { get; set; }
 
 

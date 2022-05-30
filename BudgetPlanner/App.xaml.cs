@@ -34,6 +34,7 @@ namespace BudgetPlanner
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            
         }
 
         /// <summary>
