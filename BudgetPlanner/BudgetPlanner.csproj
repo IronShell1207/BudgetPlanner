@@ -121,7 +121,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppDbContext.cs" />
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Infrastructure\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Constants\ProgPathes.cs" />
     <Compile Include="Infrastructure\Controls\AccountInfo.xaml.cs">
       <DependentUpon>AccountInfo.xaml</DependentUpon>
@@ -137,14 +137,15 @@
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ViewModels\Base\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewModels\Base\ViewModel.cs" />
     <Compile Include="Infrastructure\ViewModels\MainVM.cs" />
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\NavMenuItem.cs" />
-    <Compile Include="Objects\MoneyOperation.cs" />
-    <Compile Include="Objects\OperationsCategories.cs" />
+    <Compile Include="Objects\MoneyOperationTypes.cs" />
+    <Compile Include="Constants\OperationsCategories.cs" />
     <Compile Include="Objects\TheDisposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

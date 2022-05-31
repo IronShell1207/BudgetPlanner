@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using BudgetPlanner.Infrastructure.ViewModels.Base;
 using BudgetPlanner.Objects;
@@ -14,9 +15,33 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         public string UserName { get; set; } = "Имя пользователя";
         public List<MoneyOperation> MoneyOperations { get; set; }
-
         public double Balance { get; set; } = 0;
         public double TodaysChange { get; set; } = 0;
+
+        public List<string> OperationsTypes => OperationsCategories.OperationType;
+
+        public List<string> OperationKind => SelectedOperationType == 0
+            ? OperationsCategories.RecievedCategories
+            : OperationsCategories.SpendCategories;
+        #region AddNewOperation
+        public MoneyOperation NewOperation { get; set;} = new MoneyOperation();
+        public int SelectedOperationType { get; set; } = 0;
+        public int SelectedOperationKind { get; set; } = 0;
+        public RelayCommand SaveNewOperationCommand { get;  }
+        
+        public bool CanSaveNewOperation()
+        {
+            if (NewOperation.Sum != 0.0 && !string.IsNullOrWhiteSpace(NewOperation.OperationCategory))
+                return true;
+            return false;
+        }
+        public async void SaveNewOperation()
+        {
+            if (CanSaveNewOperation())
+            {
+            }
+        }
+#endregion
 
         private async void UpdateBalance()
         {
@@ -47,6 +72,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         public MainVM()
         {
             Task.Run(UpdateBalance);
+            SaveNewOperationCommand = new RelayCommand(SaveNewOperation, CanSaveNewOperation);
         }
     }
 }
