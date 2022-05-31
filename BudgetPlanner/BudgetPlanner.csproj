@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BudgetPlanner</RootNamespace>
     <AssemblyName>BudgetPlanner</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>ru-RU</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
@@ -130,6 +130,7 @@
     <Compile Include="Infrastructure\Controls\Operations.xaml.cs">
       <DependentUpon>Operations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Converters\BooleanToOperationTypeConverter.cs" />
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -139,10 +140,9 @@
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\NavMenuItem.cs" />
-    <Compile Include="Objects\Operations.cs" />
+    <Compile Include="Objects\MoneyOperation.cs" />
     <Compile Include="Objects\OperationsCategories.cs" />
     <Compile Include="Objects\TheDisposable.cs" />
-    <Compile Include="Objects\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\DefaultAvatar.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -222,7 +223,6 @@
     <Folder Include="Assets\NIcons\" />
     <Folder Include="Infrastructure\Behaviours\" />
     <Folder Include="Infrastructure\Commands\" />
-    <Folder Include="Infrastructure\Converters\" />
     <Folder Include="Infrastructure\Extentions\" />
     <Folder Include="Models\" />
     <Folder Include="Static\" />

@@ -6,18 +6,37 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwpctrls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:converters1="using:BudgetPlanner.Infrastructure.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid>
         <Grid.Resources>
-            <DataTemplate x:Key="OperationsDataRowTemplate">
-                <StackPanel>
-
-                </StackPanel>
-            </DataTemplate>
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+            <converters1:BooleanToOperationTypeConverter x:Key="BooleanToOperationTypeConverter"/>
             <Style TargetType="uwpctrls:DataGrid" x:Key="DataGridStyle">
-                <Setter Property="CanUserReorderColumns" Value="True"></Setter>
+                <Setter Property="CanUserReorderColumns" Value="True"/>
+                <Setter Property="Margin" Value="12"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="AlternatingRowBackground" Value="Transparent"/>
+                <Setter Property="AlternatingRowForeground" Value="Gray"/>
+                <Setter Property="AreRowDetailsFrozen" Value="False"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="AreRowGroupHeadersFrozen" Value="True"/>
+                <Setter Property="AutoGenerateColumns" Value="True"/>
+                <Setter Property="CanUserSortColumns" Value="True"/>
+                <Setter Property="CanUserReorderColumns" Value="True"/>
+                <Setter Property="CanUserResizeColumns" Value="True"/>
+                <Setter Property="ColumnHeaderHeight" Value="32"/>
+                <Setter Property="MaxColumnWidth" Value="400"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="IsReadOnly" Value="False"/>
+                <Setter Property="RowDetailsVisibilityMode" Value="Collapsed"/>
+                <Setter Property="SelectionMode" Value="Extended"/>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -26,19 +45,47 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel >
-            <TextBlock Text="Data table"/>
+            <TextBlock HorizontalAlignment="Center" FontWeight="Light" Text="Последние операции"/>
         </StackPanel>
         <uwpctrls:DataGrid x:Name="DataTable"
                            CanUserSortColumns="True"
                            Sorting="DataTable_Sorting"
-                           BorderThickness="1"
+                           BorderThickness="0.5"
                            BorderBrush="Black"
                            GridLinesVisibility="All"
                            AutoGenerateColumns="False"
                            Grid.RowSpan="2" Grid.Row="1"
+                           IsReadOnly="True"
+                           ItemsSource="{x:Bind OperationsList}"
                            Style="{StaticResource DataGridStyle}"
                            SelectionMode="Single">
-            
+            <uwpctrls:DataGrid.Columns>
+                <uwpctrls:DataGridTextColumn Header="Id" Binding="{Binding Id}" Tag="Id"/>
+
+                <uwpctrls:DataGridTextColumn Header="Сумма" Binding="{Binding Sum}" Tag="Sum" />
+
+                <uwpctrls:DataGridTextColumn Header="Тип операции" Binding="{Binding Type,
+                    Converter={StaticResource BooleanToOperationTypeConverter}}" Tag="Type"/>
+
+                <uwpctrls:DataGridTextColumn Header="Вид операции" Binding="{Binding OperationCategory}" 
+                                             Tag="OperationCategory" />
+
+                <uwpctrls:DataGridTemplateColumn Header="Дата добавления" Tag="DateTime">
+                    <uwpctrls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:MM/dd/yyy}'}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </DataTemplate>
+                    </uwpctrls:DataGridTemplateColumn.CellTemplate>
+                    <uwpctrls:DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <CalendarDatePicker Margin="3,4,3,3" Date="{Binding DateTime, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </uwpctrls:DataGridTemplateColumn.CellEditingTemplate>
+                </uwpctrls:DataGridTemplateColumn>
+
+                <uwpctrls:DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Tag="Comment" />
+                
+            </uwpctrls:DataGrid.Columns>
         </uwpctrls:DataGrid>
     </Grid>
 </UserControl>

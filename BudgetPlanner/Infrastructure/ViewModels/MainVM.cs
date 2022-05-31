@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using BudgetPlanner.Infrastructure.ViewModels.Base;
+using BudgetPlanner.Objects;
 
 namespace BudgetPlanner.Infrastructure.ViewModels
 {
     public class MainVM : ViewModel
     {
 
-        public string AppName { get; set; } = "Me here";
+        public string UserName { get; set; } = "Default username";
+        public List<MoneyOperation> MoneyOperations { get; set; }
 
         /// <summary>
         /// Gets or sets a value that indicates whether the app is showing the narrow, details-only view. 

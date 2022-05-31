@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,10 +37,8 @@ namespace BudgetPlanner
             this.InitializeComponent();
             Current = this;
             MenuCList.SelectedIndex = 0;
-            using (AppDbContext dbContext = new AppDbContext())
-            {
-
-            }
+            
+           
         }
 
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
@@ -132,6 +132,15 @@ namespace BudgetPlanner
         private void ActionsMenuList_OnItemInvoked(object sender, ListViewItem e)
         {
             MenuCList.SelectedIndex = -1;
+        }
+
+
+        private async void AppShell_OnLoading(FrameworkElement sender, object args)
+        {
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+                MViewModel.MoneyOperations = await dbContext.GetOperationsAsync(10);
+            }
         }
     }
 }

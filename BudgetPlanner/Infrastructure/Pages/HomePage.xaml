@@ -22,11 +22,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <SplitView></SplitView>
         <controls:AccountInfo Grid.ColumnSpan="3"
-                              UserName="{x:Bind ViewModel.AppName}"
+                              UserName="{x:Bind ViewModel.UserName}"
                               >
 
         </controls:AccountInfo>
-        <controls:Operations Grid.Row="1" Grid.Column="2" Width="500"/>
+        <controls:Operations OperationsList="{x:Bind ViewModel.MoneyOperations}" Grid.Row="1" Grid.Column="2" Width="500"/>
     </Grid>
 </Page>

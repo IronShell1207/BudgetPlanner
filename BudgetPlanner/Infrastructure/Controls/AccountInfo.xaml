@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="UserProfilePanel" 
-                            Margin="20 5 " VerticalAlignment="Center">
+                            Margin="40 5 " VerticalAlignment="Center">
                     <Border BorderThickness="2"
                             Height="120"
                             Width="120"
@@ -29,7 +29,7 @@
                             <SolidColorBrush Color="#dd990000">
                             </SolidColorBrush>
                         </Border.BorderBrush>
-                        <Image x:Name="UserProfileImg"/>
+                        <Image x:Name="UserProfileImg" Source="{StaticResource UserAvatar}"/>
                     </Border>
                     <TextBlock x:Name="UserNameTextBlock" 
                                Text="{x:Bind UserName}"

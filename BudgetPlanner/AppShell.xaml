@@ -9,6 +9,7 @@
     xmlns:local="using:BudgetPlanner"
     xmlns:objcts ="using:BudgetPlanner.Objects"
     mc:Ignorable="d"
+    Loading="AppShell_OnLoading"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 <Page.DataContext>
     <vmodels:MainVM/>
