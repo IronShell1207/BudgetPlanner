@@ -15,7 +15,7 @@ namespace BudgetPlanner
     {
         private readonly string ConnectionString = $"Data source={ProgPathes.DataFolderPath}budgetPlanner.db";
 
-        public async Task<int> AddOperationAsync(MoneyOperation moneyMove)
+        public async Task<int> AddOperationAsync(MoneyOperations moneyMove)
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -65,7 +65,7 @@ namespace BudgetPlanner
             }
         }
 
-        public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
+        public async Task<int> AddOperationAsync(MoneyOperations moneyMove, SqliteConnection connection)
         {
             var operation = connection.CreateCommand();
             operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
@@ -73,7 +73,7 @@ namespace BudgetPlanner
             return operation.ExecuteNonQuery();
         }
 
-        public async Task<List<MoneyOperation>> GetOperationsAsync(int limit = 10, int offset = 0 )
+        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit = 10, int offset = 0 )
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -82,9 +82,9 @@ namespace BudgetPlanner
             }
         }
 
-        public async Task<List<MoneyOperation>> GetOperationsAsync(int limit, int offset, SqliteConnection connection)
+        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit, int offset, SqliteConnection connection)
         {
-            var operationsList = new List<MoneyOperation>();
+            var operationsList = new List<MoneyOperations>();
             var command = connection.CreateCommand();
             command.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations LIMIT {limit} OFFSET {offset}";
             var reader = await command.ExecuteReaderAsync();
@@ -92,7 +92,7 @@ namespace BudgetPlanner
             {
                 while (await reader.ReadAsync())
                 {
-                    var operation = new MoneyOperation();
+                    var operation = new MoneyOperations();
                     operation.Id = reader.GetInt64(0);
                     operation.OperationCategory = reader.GetString(1);
                     operation.Sum = reader.GetDouble(2);

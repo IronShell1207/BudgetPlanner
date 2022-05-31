@@ -26,13 +26,13 @@ namespace BudgetPlanner.Infrastructure.Controls
         public static readonly DependencyProperty OperationsListProperty =
             DependencyProperty.Register(
                 nameof(OperationsList),
-                typeof(IEnumerable<MoneyOperation>),
+                typeof(IEnumerable<MoneyOperations>),
                 typeof(Operations),
-                new PropertyMetadata(default(IEnumerable<MoneyOperation>)));
+                new PropertyMetadata(default(IEnumerable<MoneyOperations>)));
 
-        public IEnumerable<MoneyOperation> OperationsList
+        public IEnumerable<MoneyOperations> OperationsList
         {
-            get { return (IEnumerable<MoneyOperation>) GetValue(OperationsListProperty); }
+            get { return (IEnumerable<MoneyOperations>) GetValue(OperationsListProperty); }
             set { SetValue(OperationsListProperty, value); }
         }
 

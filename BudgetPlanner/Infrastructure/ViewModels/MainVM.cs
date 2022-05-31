@@ -14,7 +14,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
     {
 
         public string UserName { get; set; } = "Имя пользователя";
-        public List<MoneyOperation> MoneyOperations { get; set; }
+        public List<MoneyOperations> MoneyOperations { get; set; }
         public double Balance { get; set; } = 0;
         public double TodaysChange { get; set; } = 0;
 
@@ -24,7 +24,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             ? OperationsCategories.RecievedCategories
             : OperationsCategories.SpendCategories;
         #region AddNewOperation
-        public MoneyOperation NewOperation { get; set;} = new MoneyOperation();
+        public MoneyOperations NewOperation { get; set;} = new MoneyOperations();
         public int SelectedOperationType { get; set; } = 0;
         public int SelectedOperationKind { get; set; } = 0;
         public RelayCommand SaveNewOperationCommand { get;  }
