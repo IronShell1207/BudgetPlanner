@@ -32,7 +32,7 @@
                         <Image x:Name="UserProfileImg" Source="{StaticResource UserAvatar}"/>
                     </Border>
                     <TextBlock x:Name="UserNameTextBlock" 
-                               Text="{x:Bind UserName}"
+                               Text="{x:Bind UserName, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Bottom"
                                FontSize="20em"/>
@@ -49,14 +49,14 @@
                     </TextBlock>
                     <TextBlock FontSize="25em" HorizontalAlignment="Center"
                                VerticalAlignment="Center">    
-                        <Run Text="{x:Bind BalanceCurrent}"/>
-                        <Run Text="{x:Bind Currency}"/>
+                        <Run Text="{x:Bind BalanceCurrent, Mode=OneWay}"/>
+                        <Run Text="{x:Bind Currency, Mode=OneWay}"/>
                     </TextBlock>
                     <TextBlock FontSize="13em" HorizontalAlignment="Center"
                                VerticalAlignment="Center">    
                         <Run Text="Изменения за сегодня "/>
-                        <Run Text="{x:Bind TodayBalanceChange}"/>
-                        <Run Text="{x:Bind Currency}"/>
+                        <Run Text="{x:Bind TodayBalanceChange, Mode=OneWay}"/>
+                        <Run Text="{x:Bind Currency, Mode=OneWay}"/>
                     </TextBlock>
                 </StackPanel>
             </Grid>

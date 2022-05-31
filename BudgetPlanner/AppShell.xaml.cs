@@ -62,6 +62,7 @@ namespace BudgetPlanner
             {
                 Symbol = Symbol.DockBottom,
                 Label = "Операции",
+                DestPage = typeof(OperationsPage)   
             },
 
             new NavMenuItem()
@@ -126,13 +127,15 @@ namespace BudgetPlanner
             {
                 if (item.DestPage == typeof(HomePage))
                     AppShellFrame.Navigate(typeof(HomePage), null);
+                else if (item.DestPage == typeof(OperationsPage))
+                    AppShellFrame.Navigate(typeof(OperationsPage), null);
             }
         }
 
         private void ActionsMenuList_OnItemInvoked(object sender, ListViewItem e)
         {
             MenuCList.SelectedIndex = -1;
-        }
+        }   
 
 
         private async void AppShell_OnLoading(FrameworkElement sender, object args)

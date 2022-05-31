@@ -13,16 +13,21 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlanner.Infrastructure.ViewModels;
+using BudgetPlanner.Infrastructure.ViewModels.Base;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace BudgetPlanner.Infrastructure.Pages  
 {
     
     public sealed partial class HomePage : Page
     {
-        public MainVM ViewModel => AppShell.Current.MViewModel;
+       // public MainVM ViewModel => AppShell.Current.MViewModel;
+
         public HomePage()
         {
             this.InitializeComponent();
         }
+
+
     }
 }

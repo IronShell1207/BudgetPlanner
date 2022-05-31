@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlanner.Infrastructure.ViewModels;
+using BudgetPlanner.Objects;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -30,27 +31,26 @@ namespace BudgetPlanner.Infrastructure.Controls
 
         private void LinkTextBox_OnKeyUp(object sender, KeyRoutedEventArgs e)
         {
-            var keysMass = new List<VirtualKey>()
-            {
-                VirtualKey.Number0,
-                VirtualKey.Number1,
-                VirtualKey.Number2,
-                VirtualKey.Number3,
-                VirtualKey.Number4,
-                VirtualKey.Number5,
-                VirtualKey.Number6,
-                VirtualKey.Number7,
-                VirtualKey.Number8,
-                VirtualKey.Number9,
-                VirtualKey.Decimal,
-                VirtualKey.Final
-            };
-            e.Handled = keysMass.Contains(e.Key);
+
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            viewModel.OnPropertyChanged(nameof(viewModel.OperationKind));
+            if (((sender as ComboBox).SelectedItem as string) == OperationsCategories.OperationType.First())
+            {
+                viewModel.OperationKinds = OperationsCategories.RecievedCategories;
+                OperationKindComboBox.ItemsSource = viewModel.OperationKinds;
+            }
+            else
+            {
+                viewModel.OperationKinds = OperationsCategories.SpendCategories;
+                OperationKindComboBox.ItemsSource = viewModel.OperationKinds;
+            }
         }
+
+        private void LinkTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //viewModel.OnPropertyChanged(nameof(viewModel.NewOperation));
+       }
     }
 }

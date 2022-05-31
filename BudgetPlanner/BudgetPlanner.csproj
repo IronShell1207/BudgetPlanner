@@ -134,8 +134,14 @@
       <DependentUpon>Operations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Converters\BooleanToOperationTypeConverter.cs" />
+    <Compile Include="Infrastructure\Converters\DateTimeConverter.cs" />
+    <Compile Include="Infrastructure\Converters\DateTimeToDateConverter.cs" />
+    <Compile Include="Infrastructure\Converters\DateTimeToTimeConverter.cs" />
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Pages\OperationsPage.xaml.cs">
+      <DependentUpon>OperationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ViewModels\Base\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewModels\Base\ViewModel.cs" />
@@ -194,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Infrastructure\Pages\OperationsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Infrastructure\Styles\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +215,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Mvvm">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>

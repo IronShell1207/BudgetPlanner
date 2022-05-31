@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -23,7 +24,17 @@ namespace BudgetPlanner
                 return await AddOperationAsync(moneyMove, connection);
             }
         }
-
+        public async Task<int> AddOperationAsync(MoneyOperations moneyMove, SqliteConnection connection)
+        {
+            CultureInfo ci = new CultureInfo("en");
+            Thread.CurrentThread.CurrentCulture = ci;
+            var operation = connection.CreateCommand();
+            var type = moneyMove.Type ? 1 : 0;
+            var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
+            operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
+                                    $"(\"{moneyMove.OperationCategory}\", \"{sum}\", \"{type}\", \"{moneyMove.Comment}\", \"{moneyMove.DateTime}\" )";
+            return operation.ExecuteNonQuery();
+        }
         public async Task<List<double>> GetAllMoneyMoves()
         {
             using (var connection = new SqliteConnection(ConnectionString))
@@ -40,7 +51,6 @@ namespace BudgetPlanner
                         operations.Add(reader.GetDouble(0));
                     }
                 }
-
                 return operations;
             }
         }
@@ -51,6 +61,8 @@ namespace BudgetPlanner
                 List<double> operations = new List<double>();
                 connection.Open();
                 var operation = connection.CreateCommand();
+                CultureInfo ci = new CultureInfo("en");
+                Thread.CurrentThread.CurrentCulture = ci;
                 operation.CommandText = $"SELECT Sum FROM Operations WHERE DateTime BETWEEN ('{date.ToShortDateString()}') AND ('{(date+TimeSpan.FromDays(1)).ToShortDateString()}' )";
                 var reader = await operation.ExecuteReaderAsync();
                 if (reader.HasRows)
@@ -60,19 +72,9 @@ namespace BudgetPlanner
                         operations.Add(reader.GetDouble(0));
                     }
                 }
-
                 return operations;
             }
         }
-
-        public async Task<int> AddOperationAsync(MoneyOperations moneyMove, SqliteConnection connection)
-        {
-            var operation = connection.CreateCommand();
-            operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
-                                    $"(\"{moneyMove.OperationCategory}\", \"{moneyMove.Sum}\", \"{moneyMove.Type}\", \"{moneyMove.Comment}\", \"{moneyMove.DateTime}\" )";
-            return operation.ExecuteNonQuery();
-        }
-
         public async Task<List<MoneyOperations>> GetOperationsAsync(int limit = 10, int offset = 0 )
         {
             using (var connection = new SqliteConnection(ConnectionString))

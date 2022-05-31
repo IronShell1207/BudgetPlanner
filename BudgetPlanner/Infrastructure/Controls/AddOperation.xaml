@@ -5,10 +5,15 @@
     xmlns:local="using:BudgetPlanner.Infrastructure.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:BudgetPlanner.Infrastructure.Converters"
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="400">
     <Grid>
+        <Grid.Resources>
+            <converters:DateTimeToDateConverter x:Key="DateTimeToDateConverter"/>
+            <converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter"/>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -29,8 +34,8 @@
         </Border>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10 5">
             <TextBlock Text="Время операции"></TextBlock>
-            <DatePicker RequestedTheme="Light" HorizontalAlignment="Center"/>
-            <TimePicker RequestedTheme="Light" HorizontalAlignment="Center" Margin="5 10"/>
+            <DatePicker RequestedTheme="Light" HorizontalAlignment="Center" Date="{x:Bind viewModel.Date, Mode=TwoWay}"/>
+            <TimePicker RequestedTheme="Light" HorizontalAlignment="Center" Margin="5 10" Time="{x:Bind viewModel.Time, Mode=TwoWay }"/>
         </StackPanel>
         <StackPanel Grid.Row="2">
             <TextBox x:Name="LinkTextBox"
@@ -40,7 +45,9 @@
                      KeyUp="LinkTextBox_OnKeyUp"
                      PlaceholderText="Сумма операции"
                      Background="#ddd"
+                     Text="{x:Bind viewModel.NewOperation.Sum , Mode= TwoWay}"
                      BorderBrush="Black"
+                     TextChanged="LinkTextBox_OnTextChanged"
                      RequestedTheme="Light"
                      Header="Сумма операции"
                      PlaceholderForeground="#767"
@@ -48,8 +55,7 @@
             <!--Error message-->
             <Grid Grid.Row="1"
                   Margin="24, 0"
-                  Visibility="Collapsed"
-            >
+                  Visibility="Collapsed">
                 <!--Visibility="{x:Bind ViewModel.CurrentFeed.IsInError, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" />
@@ -69,19 +75,21 @@
                       HorizontalAlignment="Stretch"
                       PlaceholderText="Тип операции"
                       SelectionChanged="Selector_OnSelectionChanged"
-                      SelectedIndex="{x:Bind viewModel.SelectedOperationType}"
+                      SelectedIndex="{x:Bind viewModel.SelectedOperationType, Mode= TwoWay}"
                       ItemsSource="{x:Bind viewModel.OperationsTypes}"/>
             <ComboBox RequestedTheme="Light" Margin="5 10"
+                      x:Name="OperationKindComboBox"
                       HorizontalAlignment="Stretch"
                       PlaceholderText="Вид операции"
-                      SelectedIndex="{x:Bind viewModel.SelectedOperationKind}"
-                      ItemsSource="{x:Bind viewModel.OperationKind}"/>
+                      SelectedIndex="{x:Bind viewModel.SelectedOperationKind , Mode= TwoWay}"
+                      ItemsSource="{x:Bind viewModel.OperationKinds}"/>
             <TextBox x:Name="NameTextBox"
                      Grid.Row="2"
                      RequestedTheme="Light"
                      Margin="5 4"
                      Foreground="Black"
                      PlaceholderText="Комментарий"
+                     Text="{x:Bind viewModel.NewOperation.Comment, Mode=TwoWay}"
                      PlaceholderForeground="#767"
                      Header="Комментарий"
                      Style="{StaticResource TextBoxStyle1}"/>

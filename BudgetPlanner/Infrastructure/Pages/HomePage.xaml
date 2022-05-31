@@ -7,11 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BudgetPlanner.Infrastructure.Controls"
     xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:viewModels="using:BudgetPlanner.Infrastructure.ViewModels"
     mc:Ignorable="d"
     Foreground="Black"
     FontFamily="Segoe UI"
     Background="White">
-
+<Page.DataContext>
+    <viewModels:MainVM/>
+</Page.DataContext>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="300"/>
@@ -23,20 +26,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <controls1:GridSplitter Grid.Column="2" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" 
+        <controls1:GridSplitter Grid.Column="2" Grid.Row="1"  
+                                BorderBrush="Black" 
+                                BorderThickness="1" 
                                 GripperCursor="Default"
                                 RequestedTheme="Light"
                                 HorizontalAlignment="Left"
-                                CursorBehavior="ChangeOnSplitterHover" ResizeDirection="Columns" >
+                                CursorBehavior="ChangeOnSplitterHover"
+                                ResizeDirection="Columns" >
             <controls1:GridSplitter.RenderTransform>
                 <TranslateTransform X="-8" />
             </controls1:GridSplitter.RenderTransform>
         </controls1:GridSplitter>
         <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center"></controls:AddOperation>
-        <controls:AccountInfo Grid.ColumnSpan="3"
-                              BalanceCurrent="{x:Bind ViewModel.Balance}"
-                              UserName="{x:Bind ViewModel.UserName}"
-                              TodayBalanceChange="{x:Bind ViewModel.TodaysChange}"/>
-        <controls:Operations OperationsList="{x:Bind ViewModel.MoneyOperations}" Grid.Row="1" Grid.Column="2" MinWidth="400"/>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+        <TextBlock Text="{Binding Balance, Mode=TwoWay}" Foreground="Black" FontSize="30"   ></TextBlock>
+            <Button Command="{Binding IncCommand, Mode=TwoWay}" Width="100" RequestedTheme="Light" Content="Press me"/>
+        </StackPanel>
+        <controls:AccountInfo Grid.ColumnSpan="3" 
+                              Currency="{Binding Currency, Mode=TwoWay}"
+                              TodayBalanceChange="{Binding TodaysChange, Mode=TwoWay}"
+                              BalanceCurrent="{Binding Balance, Mode=TwoWay}"
+                              UserName="{Binding UserName, Mode=TwoWay}"/>
+        <controls:Operations  Grid.Row="1" Grid.Column="2" MinWidth="400"/>
     </Grid>
 </Page>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
+using BudgetPlanner.Objects;
 
 namespace BudgetPlanner.Infrastructure.Converters
 {
@@ -12,12 +13,12 @@ namespace BudgetPlanner.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (bool) value ? "Пополнения" : "Затраты";
+            return (bool) value ? OperationsCategories.OperationType.First() : OperationsCategories.OperationType.Last();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return value == "Пополнения" ? true : false;
+            return value == OperationsCategories.OperationType.First() ? true : false;
         }
         
     }
