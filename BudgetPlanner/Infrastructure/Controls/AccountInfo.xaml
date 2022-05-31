@@ -45,7 +45,7 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                         <Run FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xE181;"></Run>
-                        <Run Text="Account"></Run>
+                        <Run Text="Баланс"></Run>
                     </TextBlock>
                     <TextBlock FontSize="25em" HorizontalAlignment="Center"
                                VerticalAlignment="Center">    
@@ -54,7 +54,7 @@
                     </TextBlock>
                     <TextBlock FontSize="13em" HorizontalAlignment="Center"
                                VerticalAlignment="Center">    
-                        <Run Text="Today's change: "/>
+                        <Run Text="Изменения за сегодня "/>
                         <Run Text="{x:Bind TodayBalanceChange}"/>
                         <Run Text="{x:Bind Currency}"/>
                     </TextBlock>

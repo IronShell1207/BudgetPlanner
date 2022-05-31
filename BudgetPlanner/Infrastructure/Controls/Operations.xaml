@@ -54,6 +54,7 @@
                            BorderBrush="Black"
                            GridLinesVisibility="All"
                            AutoGenerateColumns="False"
+                           RequestedTheme="Light"
                            Grid.RowSpan="2" Grid.Row="1"
                            IsReadOnly="True"
                            ItemsSource="{x:Bind OperationsList}"

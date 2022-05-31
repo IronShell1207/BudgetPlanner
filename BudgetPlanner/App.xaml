@@ -8,9 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Infrastructure/Libs/AssetsLib.xaml"/>
-                <ResourceDictionary Source="Infrastructure/Styles/NavToggleButtonStyle.xaml"/>
-                <ResourceDictionary Source="Infrastructure/Styles/NavMenuItemContainerStyle.xaml"/>
-                <ResourceDictionary Source="Infrastructure/Styles/ColorsTheme.xaml"/>
+                <ResourceDictionary Source="Infrastructure/Styles/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             

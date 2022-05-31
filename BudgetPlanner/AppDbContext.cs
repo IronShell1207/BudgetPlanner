@@ -24,6 +24,47 @@ namespace BudgetPlanner
             }
         }
 
+        public async Task<List<double>> GetAllMoneyMoves()
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                List<double> operations = new List<double>();
+                connection.Open();
+                var operation = connection.CreateCommand();
+                operation.CommandText = $"SELECT Sum FROM Operations";
+                var reader = await operation.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        operations.Add(reader.GetDouble(0));
+                    }
+                }
+
+                return operations;
+            }
+        }
+        public async Task<List<double>> GetMoneyMovesByDate(DateTime date)
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                List<double> operations = new List<double>();
+                connection.Open();
+                var operation = connection.CreateCommand();
+                operation.CommandText = $"SELECT Sum FROM Operations WHERE DateTime BETWEEN ('{date.ToShortDateString()}') AND ('{(date+TimeSpan.FromDays(1)).ToShortDateString()}' )";
+                var reader = await operation.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        operations.Add(reader.GetDouble(0));
+                    }
+                }
+
+                return operations;
+            }
+        }
+
         public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
         {
             var operation = connection.CreateCommand();

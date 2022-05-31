@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BudgetPlanner.Infrastructure.Controls"
+    xmlns:controls1="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Foreground="Black"
     FontFamily="Segoe UI"
@@ -13,21 +14,29 @@
 
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="300"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <SplitView></SplitView>
+        <controls1:GridSplitter Grid.Column="2" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" 
+                                GripperCursor="Default"
+                                RequestedTheme="Light"
+                                HorizontalAlignment="Left"
+                                CursorBehavior="ChangeOnSplitterHover" ResizeDirection="Columns" >
+            <controls1:GridSplitter.RenderTransform>
+                <TranslateTransform X="-8" />
+            </controls1:GridSplitter.RenderTransform>
+        </controls1:GridSplitter>
+        <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center"></controls:AddOperation>
         <controls:AccountInfo Grid.ColumnSpan="3"
+                              BalanceCurrent="{x:Bind ViewModel.Balance}"
                               UserName="{x:Bind ViewModel.UserName}"
-                              >
-
-        </controls:AccountInfo>
-        <controls:Operations OperationsList="{x:Bind ViewModel.MoneyOperations}" Grid.Row="1" Grid.Column="2" Width="500"/>
+                              TodayBalanceChange="{x:Bind ViewModel.TodaysChange}"/>
+        <controls:Operations OperationsList="{x:Bind ViewModel.MoneyOperations}" Grid.Row="1" Grid.Column="2" MinWidth="400"/>
     </Grid>
 </Page>
