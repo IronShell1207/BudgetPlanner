@@ -27,7 +27,7 @@
                 BorderBrush="#141414" 
                 Grid.Row="0"
                 BorderThickness="0 0 0 0.8">
-            <TextBlock Margin="10 10 5 5" Text="Добавить операцию по счету"
+            <TextBlock Margin="10 10 5 5" Text="{x:Bind Title}"
                        HorizontalAlignment="Left" VerticalAlignment="Center"
                        Foreground="#ff0723"
                        FontSize="20em"/>
