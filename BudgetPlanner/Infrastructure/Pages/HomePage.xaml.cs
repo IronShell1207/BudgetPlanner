@@ -30,10 +30,7 @@ namespace BudgetPlanner.Infrastructure.Pages
 
         private async void HomePage_OnLoading(FrameworkElement sender, object args)
         {
-            using (AppDbContext dbContext = new AppDbContext())
-            {
-                var list = await dbContext.GetOperationsAsync();
-            }
+            ViewModel.DataUpdaterService(20);
         }
     }
 }

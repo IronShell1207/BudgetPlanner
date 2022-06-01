@@ -25,34 +25,34 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         public string UserName { get; set; } = "Username";
 
-        public ObsCollection<MoneyOperations> MoneyOperations { get; set; } = new ObsCollection<MoneyOperations>()
+        public ObsCollection<MoneyOperation> MoneyOperations { get; set; } = new ObsCollection<MoneyOperation>()
         {
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 0, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.RecievedCategories.First(), Sum = 230, Type = true
             },
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 1, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.SpendCategories.First(), Sum = -330, Type = false
             },
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 2, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
             },
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 3, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
             },
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 4, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.SpendCategories[3], Sum = -430, Type = false
             },
-            new MoneyOperations()
+            new MoneyOperation()
             {
                 Id = 5, Comment = "Покупка в ашане", DateTime = DateTime.Now,
                 OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
@@ -98,9 +98,9 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         #region AddNewOperation
 
-        private MoneyOperations _newOperation = new MoneyOperations();
+        private MoneyOperation _newOperation = new MoneyOperation();
 
-        public MoneyOperations NewOperation
+        public MoneyOperation NewOperation
         {
             get => _newOperation;
             set
@@ -199,11 +199,25 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         private bool _isInDetailsMode = false;
 
-        public async void DataUpdaterService(int limit = 50)
+        public async void DataUpdaterService(int limit = 20, string orderBy = "ORDER BY DateTime DESC")
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
-                var list = await dbContext.GetOperationsAsync(limit);
+                var list = await dbContext.GetOperationsAsync(limit,0, orderBy);
+                MoneyOperations.Clear();
+                foreach (var operation in list)
+                {
+                    MoneyOperations.Add(operation);
+                }
+                OnPropertyChanged(nameof(MoneyOperations));
+            }
+        }
+
+        public async void DiplayDataByTimeFrame(DateTime dateFrom, DateTime dateTo, string sortOrder= "")
+        {
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+                var list = await dbContext.GetDataByTimePeriod(dateFrom, dateTo, sortOrder);
                 MoneyOperations.Clear();
                 foreach (var operation in list)
                 {
@@ -218,7 +232,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             using (AppDbContext dbContext = new AppDbContext())
             {
                 var allOperations = dbContext.GetAllMoneyMoves().Result;
-                var todayOperations = dbContext.GetMoneyMovesByDate(DateTime.Now).Result;
+                var todayOperations = dbContext.GetMoneyMovesByDate(DateTime.Now, DateTime.Now + TimeSpan.FromDays(1)).Result;
                 Balance = 0;
                 TodaysChange = 0;
                 foreach (var operation in allOperations)

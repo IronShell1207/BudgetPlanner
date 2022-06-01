@@ -17,7 +17,7 @@ namespace BudgetPlanner
     {
         private readonly string ConnectionString = $"Data source={ProgPathes.DataFolderPath}budgetPlanner.db";
 
-        public async Task<int> AddOperationAsync(MoneyOperations moneyMove)
+        public async Task<int> AddOperationAsync(MoneyOperation moneyMove)
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -25,7 +25,7 @@ namespace BudgetPlanner
                 return await AddOperationAsync(moneyMove, connection);
             }
         }
-        public async Task<int> AddOperationAsync(MoneyOperations moneyMove, SqliteConnection connection)
+        public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
         {
             CultureInfo ci = new CultureInfo("en");
             Thread.CurrentThread.CurrentCulture = ci;
@@ -55,7 +55,7 @@ namespace BudgetPlanner
                 return operations;
             }
         }
-        public async Task<List<double>> GetMoneyMovesByDate(DateTime date)
+        public async Task<List<double>> GetMoneyMovesByDate(DateTime dateFrom, DateTime dateTo)
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -64,7 +64,7 @@ namespace BudgetPlanner
                 var operation = connection.CreateCommand();
                 CultureInfo ci = new CultureInfo("en");
                 Thread.CurrentThread.CurrentCulture = ci;
-                operation.CommandText = $"SELECT Sum FROM Operations WHERE DateTime BETWEEN ('{date.ToShortDateString()}') AND ('{(date+TimeSpan.FromDays(1)).ToShortDateString()}' )";
+                operation.CommandText = $"SELECT Sum FROM Operations WHERE DateTime BETWEEN ('{dateFrom.ToShortDateString()}') AND ('{(dateTo).ToShortDateString()}' )";
                 var reader = await operation.ExecuteReaderAsync();
                 if (reader.HasRows)
                 {
@@ -76,26 +76,54 @@ namespace BudgetPlanner
                 return operations;
             }
         }
-        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit = 50, int offset = 0 )
+        public async Task<List<MoneyOperation>> GetDataByTimePeriod(DateTime dateFrom, DateTime dateTo, string orderBy= "")
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                var operationsList = new List<MoneyOperation>();
+                connection.Open();
+                var sqliteCommand = connection.CreateCommand();
+                CultureInfo ci = new CultureInfo("en");
+                Thread.CurrentThread.CurrentCulture = ci;
+                sqliteCommand.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations WHERE DateTime BETWEEN ('{dateFrom.ToShortDateString()}') AND ('{(dateTo).ToShortDateString()}') {orderBy}";
+                var reader = await sqliteCommand.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var operation = new MoneyOperation();
+                        operation.Id = reader.GetInt64(0);
+                        operation.OperationCategory = reader.GetString(1);
+                        operation.Sum = reader.GetDouble(2);
+                        operation.Type = reader.GetBoolean(3);
+                        operation.Comment = reader.GetString(4);
+                        operation.DateTime = reader.GetDateTime(5);
+                        operationsList.Add(operation);
+                    }
+                }
+                return operationsList;
+            }
+        }
+        public async Task<List<MoneyOperation>> GetOperationsAsync(int limit = 50, int offset = 0, string orderBy ="")
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
-                return await GetOperationsAsync(limit, offset, connection);
+                return await GetOperationsAsync(limit, offset, connection, orderBy);
             }
         }
 
-        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit, int offset, SqliteConnection connection)
+        public async Task<List<MoneyOperation>> GetOperationsAsync(int limit, int offset, SqliteConnection connection, string orderBy)
         {
-            var operationsList = new List<MoneyOperations>();
+            var operationsList = new List<MoneyOperation>();
             var command = connection.CreateCommand();
-            command.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations ORDER BY DateTime DESC LIMIT {limit} OFFSET {offset} ";
+            command.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations {orderBy} LIMIT {limit} OFFSET {offset} ";
             var reader = await command.ExecuteReaderAsync();
             if (reader.HasRows)
             {
                 while (await reader.ReadAsync())
                 {
-                    var operation = new MoneyOperations();
+                    var operation = new MoneyOperation();
                     operation.Id = reader.GetInt64(0);
                     operation.OperationCategory = reader.GetString(1);
                     operation.Sum = reader.GetDouble(2);

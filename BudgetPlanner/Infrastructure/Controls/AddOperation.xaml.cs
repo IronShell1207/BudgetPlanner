@@ -23,7 +23,7 @@ namespace BudgetPlanner.Infrastructure.Controls
 {
     public sealed partial class AddOperation : UserControl
     {
-
+        
         private MainVM viewModel => AppShell.Current.MViewModel;
         public AddOperation()
         {
@@ -49,7 +49,6 @@ namespace BudgetPlanner.Infrastructure.Controls
         {
            
             args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
-            if (string.IsNullOrWhiteSpace(sender.Text)) sender.Text = "0";
         }
 
         private void SumTextBox_OnLosingFocus(UIElement sender, LosingFocusEventArgs args)

@@ -76,7 +76,8 @@ namespace BudgetPlanner
             new NavMenuItem()
             {
                 Symbol = Symbol.Add,
-                Label = "Добавить операцию"
+                Label = "Добавить операцию",
+                DestPage = typeof(AddOperationPage)
             },
             new NavMenuItem()
             {
@@ -118,24 +119,26 @@ namespace BudgetPlanner
         {
             ActionsMenuList.SelectedIndex = -1;
             var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
-            if (item != null)
+            if (item?.DestPage != null)
             {
-                if (item.DestPage == typeof(HomePage))
-                    AppShellFrame.Navigate(typeof(HomePage), null);
-                else if (item.DestPage == typeof(OperationsPage))
-                    AppShellFrame.Navigate(typeof(OperationsPage), null);
+                AppShellFrame.Navigate(item.DestPage);
             }
         }
 
         private void ActionsMenuList_OnItemInvoked(object sender, ListViewItem e)
         {
             MenuCList.SelectedIndex = -1;
+            var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(e);
+            if (item?.DestPage != null)
+            {
+                AppShellFrame.Navigate(item.DestPage);
+            }
         }   
 
 
         private async void AppShell_OnLoading(FrameworkElement sender, object args)
         {
-            MViewModel.DataUpdaterService();
+            MViewModel.DataUpdaterService(20);
         }
     }
 }

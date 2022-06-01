@@ -130,14 +130,17 @@
       <DependentUpon>AddOperation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Controls\NavMenuListView.cs" />
-    <Compile Include="Infrastructure\Controls\Operations.xaml.cs">
-      <DependentUpon>Operations.xaml</DependentUpon>
+    <Compile Include="Infrastructure\Controls\OperationsDataGridControl.xaml.cs">
+      <DependentUpon>OperationsDataGridControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Converters\BooleanToOperationTypeConverter.cs" />
     <Compile Include="Infrastructure\Converters\DateTimeConverter.cs" />
     <Compile Include="Infrastructure\Converters\DateTimeToDateConverter.cs" />
     <Compile Include="Infrastructure\Converters\DateTimeToTimeConverter.cs" />
     <Compile Include="Infrastructure\Converters\ListToCollectionConverter.cs" />
+    <Compile Include="Infrastructure\Pages\AddOperationPage.xaml.cs">
+      <DependentUpon>AddOperationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -186,11 +189,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Infrastructure\Controls\Operations.xaml">
+    <Page Include="Infrastructure\Controls\OperationsDataGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Infrastructure\Libs\AssetsLib.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Infrastructure\Pages\AddOperationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

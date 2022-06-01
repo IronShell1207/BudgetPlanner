@@ -16,14 +16,14 @@
 
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*" MinWidth="200"/>
+            <ColumnDefinition Width="5*" MinWidth="330"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="8*" MinWidth="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="*" MinHeight="400"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <controls1:GridSplitter Grid.Column="2" Grid.Row="1"  
                                 BorderBrush="Black" 
@@ -37,7 +37,7 @@
                 <TranslateTransform X="-8" />
             </controls1:GridSplitter.RenderTransform>
         </controls1:GridSplitter>
-        <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center"></controls:AddOperation>
+        <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center" ></controls:AddOperation>
 
         <controls:AccountInfo Grid.ColumnSpan="3" 
                               Currency="{x:Bind ViewModel.Currency, Mode=TwoWay}"
@@ -45,8 +45,9 @@
                               BalanceCurrent="{x:Bind ViewModel.Balance, Mode=TwoWay}"
                               UserName="{x:Bind ViewModel.UserName, Mode=TwoWay}"/>
 
-        <controls:Operations ListOperations="{x:Bind ViewModel.MoneyOperations}" 
+        <controls:OperationsDataGridControl ListOperations="{x:Bind ViewModel.MoneyOperations}" 
                              Grid.Row="1"
+                             Title="Последние операции"
                              Grid.Column="2" MinWidth="400"/>
     </Grid>
 </Page>
