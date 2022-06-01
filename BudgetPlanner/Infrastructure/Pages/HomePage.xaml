@@ -37,9 +37,13 @@
                 <TranslateTransform X="-8" />
             </controls1:GridSplitter.RenderTransform>
         </controls1:GridSplitter>
-        <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center" ></controls:AddOperation>
+        <controls:OperationEditorControl Grid.Row="1" 
+                                         ButtonClickedCommand="{x:Bind ViewModel.SaveNewOperationCommand}"
+                                         OpData="{x:Bind ViewModel.NewOperation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         HorizontalContentAlignment="Center" 
+                                         />
 
-        <controls:AccountInfo Grid.ColumnSpan="3" 
+        <controls:AccountInfoControl Grid.ColumnSpan="3" 
                               Currency="{x:Bind ViewModel.Currency, Mode=TwoWay}"
                               TodayBalanceChange="{x:Bind ViewModel.TodaysChange, Mode=TwoWay}"
                               BalanceCurrent="{x:Bind ViewModel.Balance, Mode=TwoWay}"

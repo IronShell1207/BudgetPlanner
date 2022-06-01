@@ -80,8 +80,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         }
 
         public string Currency { get; set; } = "$";
-        public List<string> OperationsTypes => OperationsCategories.OperationType;
-        public List<string> OperationKinds { get; set; } = OperationsCategories.RecievedCategories;
+
 
         #endregion
 
@@ -110,57 +109,14 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             }
         }
 
-        public int SelectedOperationType { get; set; } = 0;
-
-        public DateTimeOffset Date
-        {
-            get
-            {
-                DateTimeOffset? ts = DateTimeConverter.DateTimeToDateTimeOffSet(NewOperation.DateTime);
-                return ts.GetValueOrDefault(DateTimeOffset.MinValue);
-            }
-            set
-            {
-                NewOperation.DateTime = new DateTime(value.Year,
-                    value.Month,
-                    value.Day,
-                    NewOperation.DateTime.Hour,
-                    NewOperation.DateTime.Minute,
-                    NewOperation.DateTime.Second,
-                    NewOperation.DateTime.Millisecond);
-            }
-        }
-
-        public TimeSpan Time
-        {
-            get
-            {
-                TimeSpan? ts = DateTimeConverter.DateTimeToTimeSpan(NewOperation.DateTime);
-                return ts.GetValueOrDefault(TimeSpan.MinValue);
-            }
-            set
-            {
-                DateTime? dt = DateTimeConverter.TimeSpanToDateTime(value);
-
-                NewOperation.DateTime = new DateTime(NewOperation.DateTime.Year,
-                    NewOperation.DateTime.Month,
-                    NewOperation.DateTime.Day,
-                    dt.GetValueOrDefault(DateTime.MinValue).Hour,
-                    dt.GetValueOrDefault(DateTime.MinValue).Minute,
-                    dt.GetValueOrDefault(DateTime.MinValue).Second,
-                    dt.GetValueOrDefault(DateTime.MinValue).Millisecond);
-            }
-        }
-
-        public int SelectedOperationKind { get; set; } = 0;
+        
         public RelayCommand SaveNewOperationCommand { get; }
 
         private async void SaveNewOperation(object param)
         {
-            NewOperation.Type = SelectedOperationType == 0;
-            if (SelectedOperationKind > -1 && NewOperation.Sum != 0)
+            if ( NewOperation.Sum != 0)
             {
-                NewOperation.OperationCategory = OperationKinds[SelectedOperationKind];
+               
                 AppDbContext dbContext = new AppDbContext();
 
                 var affectedRows = await dbContext.AddOperationAsync(NewOperation);

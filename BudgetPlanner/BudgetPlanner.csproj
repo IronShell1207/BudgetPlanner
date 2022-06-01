@@ -123,11 +123,11 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Infrastructure\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Constants\ProgPathes.cs" />
-    <Compile Include="Infrastructure\Controls\AccountInfo.xaml.cs">
-      <DependentUpon>AccountInfo.xaml</DependentUpon>
+    <Compile Include="Infrastructure\Controls\AccountInfoControl.xaml.cs">
+      <DependentUpon>AccountInfoControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Controls\AddOperation.xaml.cs">
-      <DependentUpon>AddOperation.xaml</DependentUpon>
+    <Compile Include="Infrastructure\Controls\OperationEditorControl.xaml.cs">
+      <DependentUpon>OperationEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Controls\NavMenuListView.cs" />
     <Compile Include="Infrastructure\Controls\OperationsDataGridControl.xaml.cs">
@@ -181,11 +181,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Infrastructure\Controls\AccountInfo.xaml">
+    <Page Include="Infrastructure\Controls\AccountInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Infrastructure\Controls\AddOperation.xaml">
+    <Page Include="Infrastructure\Controls\OperationEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,8 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\NIcons\" />
-    <Folder Include="Infrastructure\Behaviours\" />
-    <Folder Include="Infrastructure\Commands\" />
     <Folder Include="Infrastructure\Extentions\" />
     <Folder Include="Models\" />
     <Folder Include="Static\" />
