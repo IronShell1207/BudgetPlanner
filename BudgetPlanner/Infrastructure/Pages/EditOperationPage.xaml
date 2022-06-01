@@ -23,6 +23,7 @@
             </StackPanel>
             <controls:OperationEditorControl Margin="50 0" x:Name="EditorControl" 
                                              ButtonText="Сохранить изменения"
+                                             Title="Отредактировать операцию по счету"
                                              ButtonClickedCommand="{x:Bind ViewModel.EditOperationCommand}"/>
         </StackPanel>
     </Grid>

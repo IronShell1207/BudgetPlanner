@@ -23,7 +23,7 @@ namespace BudgetPlanner.Objects
 
         public string ToString()
         {
-            return $"{Id} - {Sum} {OperationCategory} {DateTime.ToShortDateString()}";
+            return $"${Id} - {Sum} {OperationCategory} {DateTime.ToShortDateString()}";
         }
 
         public string GetTypeString()

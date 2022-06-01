@@ -32,7 +32,7 @@ namespace BudgetPlanner.Infrastructure.Controls
                 nameof(OpData),
                 typeof(MoneyOperation),
                 typeof(OperationEditorControl),
-                new PropertyMetadata(default(MoneyOperation)));
+                new PropertyMetadata(new MoneyOperation()));
 
         public MoneyOperation OpData
         {
@@ -83,6 +83,23 @@ namespace BudgetPlanner.Infrastructure.Controls
 
         #endregion
 
+        #region Title : string - Title of the control
+
+        /// <summary>Title of the control</summary>
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(
+                nameof(Title),
+                typeof(string),
+                typeof(OperationEditorControl),
+                new PropertyMetadata(default(string)));
+
+        public string Title
+        {
+            get { return (string) GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        #endregion
         public DateTimeOffset Date
         {
             get

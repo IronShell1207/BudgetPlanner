@@ -138,12 +138,13 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         private async void SaveNewOperation(object param)
         {
-            if ( NewOperation.Sum != 0)
+            var opetation = param as MoneyOperation;
+            if (opetation.Sum != 0)
             {
                
                 AppDbContext dbContext = new AppDbContext();
 
-                var affectedRows = await dbContext.AddOperationAsync(NewOperation);
+                var affectedRows = await dbContext.AddOperationAsync(opetation);
 
                 dbContext.Dispose();
                 if (affectedRows > 0)

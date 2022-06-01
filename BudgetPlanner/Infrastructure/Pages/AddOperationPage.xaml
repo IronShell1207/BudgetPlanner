@@ -12,6 +12,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <controls:OperationEditorControl Margin="50"/>
+        <controls:OperationEditorControl ButtonText="Добавить"
+                                         ButtonClickedCommand="{x:Bind ViewModel.SaveNewOperationCommand}"
+                                         Title="Добавить операцию по счету"
+                                         Margin="50"/>
     </Grid>
 </Page>

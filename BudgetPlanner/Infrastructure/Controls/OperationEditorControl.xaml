@@ -46,7 +46,7 @@
                      Margin="5 4"
                      PlaceholderText="Сумма операции"
                      Background="#ddd"
-                     Text="{x:Bind OpData.Sum , Mode= TwoWay, UpdateSourceTrigger= PropertyChanged}"
+                     Text="{x:Bind OpData.Sum, Mode= TwoWay, UpdateSourceTrigger= PropertyChanged}"
                      BorderBrush="Black"
                      BeforeTextChanging="SumTextBox_OnBeforeTextChanging"
                      RequestedTheme="Light"
