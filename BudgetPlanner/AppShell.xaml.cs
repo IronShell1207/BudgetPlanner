@@ -82,7 +82,8 @@ namespace BudgetPlanner
             new NavMenuItem()
             {
                 Symbol = Symbol.Edit,
-                Label = "Отредактировать операцию"
+                Label = "Отредактировать операцию",
+                DestPage = typeof(EditOperationPage)
 
             }
         });

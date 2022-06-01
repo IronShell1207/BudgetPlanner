@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlanner.Infrastructure.ViewModels;
+using BudgetPlanner.Infrastructure.ViewModels.Base;
 using BudgetPlanner.Objects;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -29,15 +31,10 @@ namespace BudgetPlanner.Infrastructure.Pages
         {
             this.InitializeComponent();
         }
+
         private async void OperationsPage_OnLoading(FrameworkElement sender, object args)
         {
-                ViewModel.DataUpdaterService(999);
-            //using (AppDbContext dbContext = new AppDbContext())
-            //{
-                
-            //  var list = await dbContext.GetOperationsAsync(990);
-            //  ViewModel.MoneyOperations = new ObsCollection<MoneyOperations>(list);
-            //}
+            ViewModel.DataUpdaterService(999);
         }
 
         public List<string> DataIntervals => new List<string>()

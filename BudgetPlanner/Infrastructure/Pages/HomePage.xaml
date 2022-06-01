@@ -38,6 +38,7 @@
             </controls1:GridSplitter.RenderTransform>
         </controls1:GridSplitter>
         <controls:OperationEditorControl Grid.Row="1" 
+                                         ButtonText="Добавить"
                                          ButtonClickedCommand="{x:Bind ViewModel.SaveNewOperationCommand}"
                                          OpData="{x:Bind ViewModel.NewOperation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          HorizontalContentAlignment="Center" 

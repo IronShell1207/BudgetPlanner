@@ -25,6 +25,31 @@ namespace BudgetPlanner
                 return await AddOperationAsync(moneyMove, connection);
             }
         }
+
+        public async Task<int> EditOperationAsync(MoneyOperation moneyMove)
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                return await EditOperationAsync(moneyMove, connection);
+            }
+        }
+        public async Task<int> EditOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
+        {
+            CultureInfo ci = new CultureInfo("en");
+            Thread.CurrentThread.CurrentCulture = ci;
+            var operation = connection.CreateCommand();
+            var type = moneyMove.Type ? 1 : 0;
+            var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
+            operation.CommandText = $"UPDATE Operations SET "+
+                                    $" Sum = \"{moneyMove.Sum}\"," +
+                                    $" Type = \"{moneyMove.Type}\"," +
+                                    $" Comment = \"{moneyMove.Comment}\"," +
+                                    $" DateTime = \"{moneyMove.DateTime}\","+
+                                    $" OperationCategory = \"{moneyMove.OperationCategory}\""+
+                                    $"WHERE Id = {moneyMove.Id};";
+            return operation.ExecuteNonQuery();
+        }
         public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
         {
             CultureInfo ci = new CultureInfo("en");

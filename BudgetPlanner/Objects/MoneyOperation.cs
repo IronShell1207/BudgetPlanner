@@ -21,6 +21,16 @@ namespace BudgetPlanner.Objects
         public string Comment { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Now;
 
+        public string ToString()
+        {
+            return $"{Id} - {Sum} {OperationCategory} {DateTime.ToShortDateString()}";
+        }
+
+        public string GetTypeString()
+        {
+            return Type ? OperationsCategories.OperationType.First() : OperationsCategories.OperationType.Last();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

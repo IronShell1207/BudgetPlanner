@@ -24,7 +24,6 @@ namespace BudgetPlanner.Infrastructure.Controls
 {
     public sealed partial class OperationEditorControl : UserControl
     {
-        public MainVM viewModel => AppShell.Current.MViewModel;
         #region OpData : MoneyOperation - Принимает класс MoneyOperation
 
         /// <summary>Принимает класс MoneyOperation</summary>
@@ -66,11 +65,29 @@ namespace BudgetPlanner.Infrastructure.Controls
         }
         #endregion
 
+        #region ButtonText : string - Text of submit button
+
+        /// <summary>Text of submit button</summary>
+        public static readonly DependencyProperty ButtonTextProperty =
+            DependencyProperty.Register(
+                nameof(ButtonText),
+                typeof(string),
+                typeof(OperationEditorControl),
+                new PropertyMetadata(default(string)));
+
+        public string ButtonText
+        {
+            get { return (string) GetValue(ButtonTextProperty); }
+            set { SetValue(ButtonTextProperty, value); }
+        }
+
+        #endregion
+
         public DateTimeOffset Date
         {
             get
             {
-                DateTimeOffset? ts = DateTimeConverter.DateTimeToDateTimeOffSet(OpData.DateTime);
+                DateTimeOffset? ts = DateTimeConverter.DateTimeToDateTimeOffSet(OpData?.DateTime ?? DateTime.Now);
                 return ts.GetValueOrDefault(DateTimeOffset.MinValue);
             }
             set
@@ -89,7 +106,7 @@ namespace BudgetPlanner.Infrastructure.Controls
         {
             get
             {
-                TimeSpan? ts = DateTimeConverter.DateTimeToTimeSpan(OpData.DateTime);
+                TimeSpan? ts = DateTimeConverter.DateTimeToTimeSpan(OpData?.DateTime ?? DateTime.Now);
                 return ts.GetValueOrDefault(TimeSpan.MinValue);
             }
             set
@@ -114,16 +131,21 @@ namespace BudgetPlanner.Infrastructure.Controls
             {
                 OperationKinds = OperationsCategories.RecievedCategories;
                 OperationKindComboBox.ItemsSource = OperationKinds;
-                OpData.Type = true;
+                if (OpData != null) 
+                    OpData.Type = true;
             }
             else
             {
                 OperationKinds = OperationsCategories.SpendCategories;
                 OperationKindComboBox.ItemsSource = OperationKinds;
-                OpData.Type = false;
+                if (OpData != null)
+                    OpData.Type = false;
             }
         }
+
         public int SelectedOperationType { get; set; } = 0;
+
+
         public int SelectedOperationKind { get; set; } = 0;
 
         private void SumTextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
@@ -139,7 +161,7 @@ namespace BudgetPlanner.Infrastructure.Controls
 
         private void OperationKindComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedOperationKind>-1)
+            if (SelectedOperationKind>-1 && OpData != null )
                 OpData.OperationCategory = OperationKinds[SelectedOperationKind];
         }
     }

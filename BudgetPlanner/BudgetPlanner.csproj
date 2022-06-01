@@ -141,6 +141,9 @@
     <Compile Include="Infrastructure\Pages\AddOperationPage.xaml.cs">
       <DependentUpon>AddOperationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Pages\EditOperationPage.xaml.cs">
+      <DependentUpon>EditOperationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Infrastructure\Pages\AddOperationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Infrastructure\Pages\EditOperationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

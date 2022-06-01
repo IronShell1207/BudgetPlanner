@@ -17,7 +17,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels.Base
     public class RelayCommand : ICommand
     {
         private readonly Action<object> _execute;
-        private readonly Func<bool> _canExecute;
+        private readonly Func<object,bool> _canExecute;
         /// <summary>
         /// Raised when RaiseCanExecuteChanged is called.
         /// </summary>
@@ -35,7 +35,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels.Base
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action<object> execute, Func<bool> canExecute)
+        public RelayCommand(Action<object> execute, Func<object,bool> canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
@@ -52,7 +52,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels.Base
         /// <returns>true if this command can be executed; otherwise, false.</returns>
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute();
+            return _canExecute == null ? true : _canExecute(parameter);
         }
         /// <summary>
         /// Executes the RelayCommand on the current command target.

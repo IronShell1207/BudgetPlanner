@@ -61,6 +61,24 @@ namespace BudgetPlanner.Infrastructure.Controls
         }
 
         #endregion
+
+        #region SelectedItemInRow : MoneyOperation - Selected row in the table
+
+        /// <summary>Selected row in the table</summary>
+        public static readonly DependencyProperty SelectedItemInRowProperty =
+            DependencyProperty.Register(
+                nameof(SelectedItemInRow),
+                typeof(MoneyOperation),
+                typeof(OperationsDataGridControl),
+                new PropertyMetadata(default(MoneyOperation)));
+
+        public MoneyOperation SelectedItemInRow
+        {
+            get { return (MoneyOperation) GetValue(SelectedItemInRowProperty); }
+            set { SetValue(SelectedItemInRowProperty, value); }
+        }
+
+        #endregion
         public OperationsDataGridControl()
         {
             this.InitializeComponent();

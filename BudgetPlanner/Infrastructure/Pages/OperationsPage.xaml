@@ -46,7 +46,8 @@
                           />
 
         </StackPanel>
-        <controls:OperationsDataGridControl Foreground="Black" 
+        <controls:OperationsDataGridControl x:Name="DataTable"
+                                            Foreground="Black" 
                                             ListOperations="{x:Bind ViewModel.MoneyOperations}"
                                             Margin="5 10 5 0"
                                             Grid.Row="1"

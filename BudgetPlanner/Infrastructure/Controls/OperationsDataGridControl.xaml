@@ -58,6 +58,7 @@
                            BorderThickness="0.5"
                            BorderBrush="Black"
                            GridLinesVisibility="All"
+                           SelectedItem="{x:Bind SelectedItemInRow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            AutoGenerateColumns="False"
                            RequestedTheme="Light"
                            Grid.RowSpan="2" Grid.Row="1"

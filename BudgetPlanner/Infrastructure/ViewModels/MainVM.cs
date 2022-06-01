@@ -109,7 +109,31 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             }
         }
 
-        
+        public RelayCommand EditOperationCommand { get; }
+
+        private async void EditOperation(object param)
+        {
+            var editableOperation = param as MoneyOperation;
+            if (editableOperation.Sum != 0)
+            {
+                AppDbContext dbContext = new AppDbContext();
+                var affectedRows = await dbContext.EditOperationAsync(editableOperation);
+                dbContext.Dispose();
+                if (affectedRows > 0)
+                {
+                    var result = await ShowDialog("Успех", "Данные успешно отредактированы!");
+                    UpdateBalance();
+                    DataUpdaterService(20);
+                }
+            }
+            else
+            {
+                await ShowDialog("Ошибка",
+                    "Не удалось сохранить данные в БД, так как одно или несколько полей не заполнены!");
+            }
+        }
+
+        #endregion
         public RelayCommand SaveNewOperationCommand { get; }
 
         private async void SaveNewOperation(object param)
@@ -136,11 +160,10 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             }
         }
 
-        #endregion
-
         public MainVM()
         {
             SaveNewOperationCommand = new RelayCommand(SaveNewOperation);
+            EditOperationCommand = new RelayCommand(EditOperation);
             UpdateBalance();
         }
 
