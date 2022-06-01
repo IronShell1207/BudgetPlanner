@@ -27,36 +27,6 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         public ObsCollection<MoneyOperation> MoneyOperations { get; set; } = new ObsCollection<MoneyOperation>()
         {
-            new MoneyOperation()
-            {
-                Id = 0, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.RecievedCategories.First(), Sum = 230, Type = true
-            },
-            new MoneyOperation()
-            {
-                Id = 1, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.SpendCategories.First(), Sum = -330, Type = false
-            },
-            new MoneyOperation()
-            {
-                Id = 2, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
-            },
-            new MoneyOperation()
-            {
-                Id = 3, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
-            },
-            new MoneyOperation()
-            {
-                Id = 4, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.SpendCategories[3], Sum = -430, Type = false
-            },
-            new MoneyOperation()
-            {
-                Id = 5, Comment = "Покупка в ашане", DateTime = DateTime.Now,
-                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
-            },
         };
 
         private double _balance = 0;
