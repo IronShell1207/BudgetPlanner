@@ -30,7 +30,7 @@ namespace BudgetPlanner.Infrastructure.Pages
 
         private async void HomePage_OnLoading(FrameworkElement sender, object args)
         {
-            ViewModel.DataUpdaterService(20);
+            ViewModel.UpdateDataAsync(20);
         }
     }
 }

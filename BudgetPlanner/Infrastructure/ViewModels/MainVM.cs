@@ -30,7 +30,6 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         };
 
         private double _balance = 0;
-
         public double Balance
         {
             get => _balance;
@@ -42,7 +41,6 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         }
 
         private double _todaysChange = 0;
-
         public double TodaysChange
         {
             get => _todaysChange;
@@ -51,7 +49,15 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 
         public string Currency { get; set; } = "$";
 
-
+        /// <summary>
+        /// Gets or sets a value that indicates whether the app is showing the narrow, details-only view. 
+        /// </summary>
+        public bool IsInDetailsMode
+        {
+            get { return _isInDetailsMode; }
+            set { SetProperty(ref _isInDetailsMode, value); }
+        }
+        private bool _isInDetailsMode = false;
         #endregion
 
         private async Task<ContentDialogResult> ShowDialog(string title, string message)
@@ -65,19 +71,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             return await dialog.ShowAsync();
         }
 
-        #region AddNewOperation
-
-        private MoneyOperation _newOperation = new MoneyOperation();
-
-        public MoneyOperation NewOperation
-        {
-            get => _newOperation;
-            set
-            {
-                _newOperation = value;
-                OnPropertyChanged(nameof(NewOperation));
-            }
-        }
+        #region EditOperationCommand
 
         public RelayCommand EditOperationCommand { get; }
 
@@ -93,7 +87,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                 {
                     var result = await ShowDialog("Успех", "Данные успешно отредактированы!");
                     UpdateBalance();
-                    DataUpdaterService(20);
+                    UpdateDataAsync(20);
                 }
             }
             else
@@ -104,6 +98,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         }
 
         #endregion
+        #region AddNewOperationCommand
         public RelayCommand SaveNewOperationCommand { get; }
 
         private async void SaveNewOperation(object param)
@@ -121,7 +116,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                 {
                     var result = await ShowDialog("Успех", "Данные успешно сохранены в БД!");
                     UpdateBalance();
-                    DataUpdaterService(20);
+                    UpdateDataAsync(20);
                 }
             }
             else
@@ -130,7 +125,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                     "Не удалось сохранить данные в БД, так как одно или несколько полей не заполнены!");
             }
         }
-
+        #endregion
         public MainVM()
         {
             SaveNewOperationCommand = new RelayCommand(SaveNewOperation);
@@ -138,18 +133,8 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             UpdateBalance();
         }
 
-        /// <summary>
-        /// Gets or sets a value that indicates whether the app is showing the narrow, details-only view. 
-        /// </summary>
-        public bool IsInDetailsMode
-        {
-            get { return _isInDetailsMode; }
-            set { SetProperty(ref _isInDetailsMode, value); }
-        }
-
-        private bool _isInDetailsMode = false;
-
-        public async void DataUpdaterService(int limit = 20, string orderBy = "ORDER BY DateTime DESC")
+        #region Data updaters
+        public async void UpdateDataAsync(int limit = 20, string orderBy = "ORDER BY DateTime DESC")
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
@@ -163,11 +148,11 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             }
         }
 
-        public async void DiplayDataByTimeFrame(DateTime dateFrom, DateTime dateTo, string sortOrder= "")
+        public async void UpdateDataByTimeFrameAsync(DateTime dateFrom, DateTime dateTo, string sortOrder= "")
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
-                var list = await dbContext.GetDataByTimePeriod(dateFrom, dateTo, sortOrder);
+                var list = await dbContext.GetDataByTimePeriodAsync(dateFrom, dateTo, sortOrder);
                 MoneyOperations.Clear();
                 foreach (var operation in list)
                 {
@@ -181,8 +166,8 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
-                var allOperations = dbContext.GetAllMoneyMoves().Result;
-                var todayOperations = dbContext.GetMoneyMovesByDate(DateTime.Now, DateTime.Now + TimeSpan.FromDays(1)).Result;
+                var allOperations = dbContext.GetAllMoneyMovesAsync().Result;
+                var todayOperations = dbContext.GetMoneyMovesByDateAsync(DateTime.Now, DateTime.Now + TimeSpan.FromDays(1)).Result;
                 Balance = 0;
                 TodaysChange = 0;
                 foreach (var operation in allOperations)
@@ -191,5 +176,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                     TodaysChange += operation;
             }
         }
+        #endregion
     }
+
 }

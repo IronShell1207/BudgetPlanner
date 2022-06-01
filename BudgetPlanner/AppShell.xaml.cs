@@ -139,7 +139,7 @@ namespace BudgetPlanner
 
         private async void AppShell_OnLoading(FrameworkElement sender, object args)
         {
-            MViewModel.DataUpdaterService(20);
+            MViewModel.UpdateDataAsync(20);
         }
     }
 }

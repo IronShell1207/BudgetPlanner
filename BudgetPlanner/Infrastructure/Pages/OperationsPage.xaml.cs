@@ -34,7 +34,7 @@ namespace BudgetPlanner.Infrastructure.Pages
 
         private async void OperationsPage_OnLoading(FrameworkElement sender, object args)
         {
-            ViewModel.DataUpdaterService(999);
+            ViewModel.UpdateDataAsync(999);
         }
 
         public List<string> DataIntervals => new List<string>()
@@ -68,22 +68,22 @@ namespace BudgetPlanner.Infrastructure.Pages
             switch (SelectedIntervalIndex)
             {
                 case 0:
-                    ViewModel.DataUpdaterService(999,$"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
+                    ViewModel.UpdateDataAsync(999,$"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
                     break;
                 case 1:
-                    ViewModel.DiplayDataByTimeFrame(DateTime.Now, DateTime.Now+TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}" );
+                    ViewModel.UpdateDataByTimeFrameAsync(DateTime.Now, DateTime.Now+TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}" );
                     break;
                 case 2:
-                    ViewModel.DiplayDataByTimeFrame(DateTime.Now - TimeSpan.FromDays(2), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
+                    ViewModel.UpdateDataByTimeFrameAsync(DateTime.Now - TimeSpan.FromDays(2), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
                     break;
                 case 3:
-                    ViewModel.DiplayDataByTimeFrame(DateTime.Now - TimeSpan.FromDays(6), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
+                    ViewModel.UpdateDataByTimeFrameAsync(DateTime.Now - TimeSpan.FromDays(6), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
                     break;
                 case 4:
-                    ViewModel.DiplayDataByTimeFrame(DateTime.Now - TimeSpan.FromDays(30), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
+                    ViewModel.UpdateDataByTimeFrameAsync(DateTime.Now - TimeSpan.FromDays(30), DateTime.Now + TimeSpan.FromDays(1), $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
                     break;
                 default:
-                    ViewModel.DataUpdaterService(999, $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
+                    ViewModel.UpdateDataAsync(999, $"ORDER BY {SortOrderByTag[SelectedSortingIndex]} {isDescending}");
                     break;
 
             }

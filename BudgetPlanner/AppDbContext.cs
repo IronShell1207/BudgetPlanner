@@ -25,7 +25,17 @@ namespace BudgetPlanner
                 return await AddOperationAsync(moneyMove, connection);
             }
         }
-
+        public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
+        {
+            CultureInfo ci = new CultureInfo("en");
+            Thread.CurrentThread.CurrentCulture = ci;
+            var operation = connection.CreateCommand();
+            var type = moneyMove.Type ? 1 : 0;
+            var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
+            operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
+                                    $"(\"{moneyMove.OperationCategory}\", \"{sum}\", \"{type}\", \"{moneyMove.Comment}\", \"{moneyMove.DateTime}\" )";
+            return operation.ExecuteNonQuery();
+        }
         public async Task<int> EditOperationAsync(MoneyOperation moneyMove)
         {
             using (var connection = new SqliteConnection(ConnectionString))
@@ -41,27 +51,35 @@ namespace BudgetPlanner
             var operation = connection.CreateCommand();
             var type = moneyMove.Type ? 1 : 0;
             var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
-            operation.CommandText = $"UPDATE Operations SET "+
+            operation.CommandText = $"UPDATE Operations SET " +
                                     $" Sum = \"{moneyMove.Sum}\"," +
                                     $" Type = \"{moneyMove.Type}\"," +
                                     $" Comment = \"{moneyMove.Comment}\"," +
-                                    $" DateTime = \"{moneyMove.DateTime}\","+
-                                    $" OperationCategory = \"{moneyMove.OperationCategory}\""+
+                                    $" DateTime = \"{moneyMove.DateTime}\"," +
+                                    $" OperationCategory = \"{moneyMove.OperationCategory}\"" +
                                     $"WHERE Id = {moneyMove.Id};";
             return operation.ExecuteNonQuery();
         }
-        public async Task<int> AddOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
+
+        public async Task<int> DeleteOperationAsync(MoneyOperation moneyMove)
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                return await DeleteOperationAsync(moneyMove, connection);
+            }
+        }
+
+        public async Task<int> DeleteOperationAsync(MoneyOperation moneyMove, SqliteConnection connection)
         {
             CultureInfo ci = new CultureInfo("en");
             Thread.CurrentThread.CurrentCulture = ci;
             var operation = connection.CreateCommand();
-            var type = moneyMove.Type ? 1 : 0;
-            var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
-            operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
-                                    $"(\"{moneyMove.OperationCategory}\", \"{sum}\", \"{type}\", \"{moneyMove.Comment}\", \"{moneyMove.DateTime}\" )";
+            operation.CommandText = $"DELETE FROM Operations WHERE Id = {moneyMove.Id}";
             return operation.ExecuteNonQuery();
         }
-        public async Task<List<double>> GetAllMoneyMoves()
+
+        public async Task<List<double>> GetAllMoneyMovesAsync()
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -80,7 +98,7 @@ namespace BudgetPlanner
                 return operations;
             }
         }
-        public async Task<List<double>> GetMoneyMovesByDate(DateTime dateFrom, DateTime dateTo)
+        public async Task<List<double>> GetMoneyMovesByDateAsync(DateTime dateFrom, DateTime dateTo)
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -101,7 +119,7 @@ namespace BudgetPlanner
                 return operations;
             }
         }
-        public async Task<List<MoneyOperation>> GetDataByTimePeriod(DateTime dateFrom, DateTime dateTo, string orderBy= "")
+        public async Task<List<MoneyOperation>> GetDataByTimePeriodAsync(DateTime dateFrom, DateTime dateTo, string orderBy= "")
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {

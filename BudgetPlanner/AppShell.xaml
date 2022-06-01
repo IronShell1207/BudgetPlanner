@@ -10,6 +10,7 @@
     xmlns:objcts ="using:BudgetPlanner.Objects"
     mc:Ignorable="d"
     Loading="AppShell_OnLoading"
+    RequestedTheme="Light"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 <Page.DataContext>
     <vmodels:MainVM/>
@@ -112,9 +113,6 @@
                       AutomationProperties.Name="Menu"
                       Style="{StaticResource NavMenuButton}"
                       ToolTipService.ToolTip="Menu">
-           <!-- <ToggleButton.Content>
-                <Image Source="{StaticResource HamburgMenu}" Width="25"/>
-            </ToggleButton.Content>-->
         </ToggleButton>
     </Grid>
 </Page>

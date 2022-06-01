@@ -44,7 +44,7 @@ namespace BudgetPlanner.Infrastructure.Pages
 
         private void EditOperationPage_OnLoading(FrameworkElement sender, object args)
         {
-            ViewModel.DataUpdaterService(999);
+            ViewModel.UpdateDataAsync(999);
         }
 
         public int SelectedIndexCombo { get; set; } = 0;
