@@ -41,7 +41,6 @@
                                          ButtonText="Добавить"
                                          Title="Добавить операцию по счету"
                                          ButtonClickedCommand="{x:Bind ViewModel.SaveNewOperationCommand}"
-                                         OpData="{x:Bind ViewModel.NewOperation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          HorizontalContentAlignment="Center" 
                                          />
 
