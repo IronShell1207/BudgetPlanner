@@ -137,6 +137,7 @@
     <Compile Include="Infrastructure\Converters\DateTimeConverter.cs" />
     <Compile Include="Infrastructure\Converters\DateTimeToDateConverter.cs" />
     <Compile Include="Infrastructure\Converters\DateTimeToTimeConverter.cs" />
+    <Compile Include="Infrastructure\Converters\ListToCollectionConverter.cs" />
     <Compile Include="Infrastructure\Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -150,7 +151,7 @@
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\NavMenuItem.cs" />
-    <Compile Include="Objects\MoneyOperationTypes.cs" />
+    <Compile Include="Objects\MoneyOperation.cs" />
     <Compile Include="Constants\OperationsCategories.cs" />
     <Compile Include="Objects\TheDisposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

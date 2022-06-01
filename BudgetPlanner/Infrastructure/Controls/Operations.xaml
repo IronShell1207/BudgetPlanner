@@ -10,6 +10,7 @@
     xmlns:converters1="using:BudgetPlanner.Infrastructure.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
+    Loaded="Operations_OnLoaded"
     d:DesignWidth="400">
     <Grid>
         <Grid.Resources>
@@ -61,7 +62,6 @@
                            RequestedTheme="Light"
                            Grid.RowSpan="2" Grid.Row="1"
                            IsReadOnly="True"
-                           ItemsSource="{x:Bind ViewModel.MoneyOperations}"
                            Style="{StaticResource DataGridStyle}"
                            SelectionMode="Single">
             <uwpctrls:DataGrid.Columns>
@@ -78,7 +78,11 @@
                 <uwpctrls:DataGridTemplateColumn Header="Дата добавления" Tag="DateTime">
                     <uwpctrls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DateTime, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy hh:mm}'}" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                            <TextBlock Text="{Binding DateTime,
+                                Converter={StaticResource StringFormatConverter},
+                                ConverterParameter='{}{0:dd/MM/yyy hh:mm}'}" 
+                                       VerticalAlignment="Center" 
+                                       Margin="8,0,0,0"/>
                         </DataTemplate>
                     </uwpctrls:DataGridTemplateColumn.CellTemplate>
                     <uwpctrls:DataGridTemplateColumn.CellEditingTemplate>
@@ -89,7 +93,6 @@
                 </uwpctrls:DataGridTemplateColumn>
 
                 <uwpctrls:DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Tag="Comment" />
-                
             </uwpctrls:DataGrid.Columns>
         </uwpctrls:DataGrid>
     </Grid>

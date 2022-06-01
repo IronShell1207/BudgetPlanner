@@ -48,6 +48,7 @@
                               TodayBalanceChange="{Binding TodaysChange, Mode=TwoWay}"
                               BalanceCurrent="{Binding Balance, Mode=TwoWay}"
                               UserName="{Binding UserName, Mode=TwoWay}"/>
-        <controls:Operations  Grid.Row="1" Grid.Column="2" MinWidth="400"/>
-    </Grid>
+        <controls1:DataGrid ItemsSource="{Binding MoneyOperations}" Grid.Row="1" Grid.Column="2" MinWidth="400" RequestedTheme="Light"></controls1:DataGrid>
+        <!--<controls:Operations ListOperations="{Binding MoneyOperations, Converter={StaticResource ListToCollectionConverter}}"  Grid.Row="1" Grid.Column="2" MinWidth="400"/>
+    --></Grid>
 </Page>

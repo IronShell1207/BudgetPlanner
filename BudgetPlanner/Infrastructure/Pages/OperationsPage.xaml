@@ -11,6 +11,7 @@
     Background="White">
 
     <Grid>
-        <controls:Operations Foreground="Black"  Margin="5 10 5 0" Grid.Row="1" Grid.Column="2" MinWidth="400" />
+
+        <controls:Operations Foreground="Black" ListOperations="{x:Bind ViewModel.MoneyOperations, Converter={StaticResource ListToCollectionConverter}}" Margin="5 10 5 0" Grid.Row="1" Grid.Column="2" MinWidth="400" />
     </Grid>
 </Page>

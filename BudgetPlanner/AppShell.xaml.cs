@@ -142,7 +142,8 @@ namespace BudgetPlanner
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
-                MViewModel.MoneyOperations = await dbContext.GetOperationsAsync(10);
+                var list = await dbContext.GetOperationsAsync(10);
+                MViewModel. MoneyOperations = list;
             }
         }
     }

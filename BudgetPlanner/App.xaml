@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:common="using:BudgetPlanner.Common"
-    xmlns:local="using:BudgetPlanner">
+    xmlns:local="using:BudgetPlanner"
+    xmlns:converters="using:BudgetPlanner.Infrastructure.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +12,7 @@
                 <ResourceDictionary Source="Infrastructure/Styles/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:ListToCollectionConverter x:Key="ListToCollectionConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

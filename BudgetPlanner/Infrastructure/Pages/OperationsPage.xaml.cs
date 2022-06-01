@@ -32,7 +32,9 @@ namespace BudgetPlanner.Infrastructure.Pages
         {
             using (AppDbContext dbContext = new AppDbContext())
             {
-                ViewModel.MoneyOperations = await dbContext.GetOperationsAsync(50);
+                
+              var list = await dbContext.GetOperationsAsync(50);
+              ViewModel.MoneyOperations = list;
             }
         }
     }

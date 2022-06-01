@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,6 +13,7 @@ using BudgetPlanner.Infrastructure.ViewModels.Base;
 using BudgetPlanner.Objects;
 using Microsoft.Toolkit.Mvvm;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using SQLitePCL;
 
 namespace BudgetPlanner.Infrastructure.ViewModels
 {
@@ -19,22 +21,15 @@ namespace BudgetPlanner.Infrastructure.ViewModels
     {
 
         public string UserName { get; set; } = "Имя пользователя";
-        private List<MoneyOperations> _moneyOperations = new List<MoneyOperations>();
-        public List<MoneyOperations> MoneyOperations
-        {
-            get => _moneyOperations;
-            set
-            {
-                SetProperty(ref _moneyOperations, value);
-            }
-        }
+        public List<MoneyOperations> MoneyOperations { get; set; }
         private double _balance = 0;
         public double Balance
         {
             get => _balance;
             set
             {
-                SetProperty(ref _balance, value);
+                _balance = value;
+                OnPropertyChanged(nameof(Balance));
             }
         }
 
@@ -126,15 +121,18 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         {
             NewOperation.Type = SelectedOperationType == 0 ? true : false;
             NewOperation.OperationCategory = OperationKinds[SelectedOperationKind];
-            using (AppDbContext dbContext = new AppDbContext())
+            AppDbContext dbContext = new AppDbContext();
+            
+            var affectedRows = await dbContext.AddOperationAsync(NewOperation);
+            if (affectedRows > 0)
             {
-                var affectedRows = await dbContext.AddOperationAsync(NewOperation);
-                if (affectedRows > 0)
-                {
-                    MoneyOperations = await dbContext.GetOperationsAsync(50);
-                    UpdateBalance();
-                }
+                var list = await dbContext.GetOperationsAsync(50);
+                MoneyOperations = list;
             }
+            Balance++;
+            UpdateBalance();
+
+            dbContext.Dispose();
 
         }
         #endregion
