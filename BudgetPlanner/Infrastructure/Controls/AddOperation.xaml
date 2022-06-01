@@ -27,7 +27,7 @@
                 BorderBrush="#141414" 
                 Grid.Row="0"
                 BorderThickness="0 0 0 0.8">
-            <TextBlock Margin="10 10 5 5" Text="Добавить операцию"
+            <TextBlock Margin="10 10 5 5" Text="Добавить операцию по счету"
                        HorizontalAlignment="Left" VerticalAlignment="Center"
                        Foreground="#ff0723"
                        FontSize="20em"/>
@@ -38,55 +38,42 @@
             <TimePicker RequestedTheme="Light" HorizontalAlignment="Center" Margin="5 10" Time="{x:Bind viewModel.Time, Mode=TwoWay }"/>
         </StackPanel>
         <StackPanel Grid.Row="2">
-            <TextBox x:Name="LinkTextBox"
+            <TextBox x:Name="SumTextBox"
                      Grid.Row="0"
                      Foreground="Black"
                      Margin="5 4"
-                     KeyUp="LinkTextBox_OnKeyUp"
                      PlaceholderText="Сумма операции"
                      Background="#ddd"
                      Text="{x:Bind viewModel.NewOperation.Sum , Mode= TwoWay}"
                      BorderBrush="Black"
-                     TextChanged="LinkTextBox_OnTextChanged"
+                     BeforeTextChanging="SumTextBox_OnBeforeTextChanging"
                      RequestedTheme="Light"
                      Header="Сумма операции"
+                     LosingFocus="SumTextBox_OnLosingFocus"
                      PlaceholderForeground="#767"
                      Style="{StaticResource TextBoxStyle1}"/>
-            <!--Error message-->
-            <Grid Grid.Row="1"
-                  Margin="24, 0"
-                  Visibility="Collapsed">
-                <!--Visibility="{x:Bind ViewModel.CurrentFeed.IsInError, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">-->
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <FontIcon Margin="0,0,5,0"
-                          Glyph="&#xE7BA;"
-                          Foreground="Red"
-                          FontSize="15"
-                          FontFamily="{ThemeResource SymbolThemeFontFamily}" />
-                <TextBlock Grid.Column="1"
-                           Text="Ошибка, неверно указан параметр"
-                           Foreground="#ff0015"/>
-            </Grid>
-            <ComboBox RequestedTheme="Light" Margin="5 10"
+            <TextBlock Text="Тип операции" RequestedTheme="Light" Margin="5 0 -5 -5"/>
+            
+            <ComboBox RequestedTheme="Light" 
+                      Margin="5 10"
                       HorizontalAlignment="Stretch"
                       PlaceholderText="Тип операции"
                       SelectionChanged="Selector_OnSelectionChanged"
                       SelectedIndex="{x:Bind viewModel.SelectedOperationType, Mode= TwoWay}"
                       ItemsSource="{x:Bind viewModel.OperationsTypes}"/>
-            <ComboBox RequestedTheme="Light" Margin="5 10"
+            
+            <TextBlock Text="Вид операции" RequestedTheme="Light" Margin="5 -5"/>
+            
+            <ComboBox RequestedTheme="Light" 
+                      Margin="5 10"
                       x:Name="OperationKindComboBox"
                       HorizontalAlignment="Stretch"
                       PlaceholderText="Вид операции"
                       SelectedIndex="{x:Bind viewModel.SelectedOperationKind , Mode= TwoWay}"
                       ItemsSource="{x:Bind viewModel.OperationKinds}"/>
-            <TextBox x:Name="NameTextBox"
-                     Grid.Row="2"
-                     RequestedTheme="Light"
-                     Margin="5 4"
+            
+            <TextBox RequestedTheme="Light"
+                     Margin="5 -4 5 4"
                      Foreground="Black"
                      PlaceholderText="Комментарий"
                      Text="{x:Bind viewModel.NewOperation.Comment, Mode=TwoWay}"
@@ -94,32 +81,16 @@
                      Header="Комментарий"
                      Style="{StaticResource TextBoxStyle1}"/>
         </StackPanel>
-        <Button x:Name="SaveAndLeaveButton"
-                    Grid.Row="4"
-                    Background="#aaa"
-                    Foreground="Black"
-                    RequestedTheme="Light"
-                    HorizontalAlignment="Stretch"
-                    Margin="50,10,50,0"
-                    Content="Добавить"
-                    Command="{x:Bind viewModel.SaveNewOperationCommand}"
-                    Style="{StaticResource ButtonStyle2}"/>
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 10">
-            <FontIcon Glyph="&#xE930;"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
-                          Foreground="Green"
-                          FontSize="15"
-                          FontFamily="{ThemeResource SymbolThemeFontFamily}" />
-            <TextBlock Margin="10 0" VerticalAlignment="Center" HorizontalTextAlignment="Center">
-                    <Run Text="Добавлено в ваш список"
-                         Foreground="{ThemeResource Foreground100DimGrayBrush}"
-                         FontWeight="SemiBold" />
-            </TextBlock>
-        </StackPanel>
 
-        <!--  Text="{x:Bind ViewModel.CurrentFeed.Name, Mode=TwoWay}"/>
-                  IsEnabled="{x:Bind AreFeedControlsEnabled, Mode=OneWay}"/>-->
+        <Button Grid.Row="4"
+                Background="#aaa"
+                Foreground="Black"
+                RequestedTheme="Light"
+                HorizontalAlignment="Stretch"
+                Margin="50,10,50,0"
+                Content="Добавить"
+                Command="{x:Bind viewModel.SaveNewOperationCommand}"
+                Style="{StaticResource ButtonStyle2}"/>
 
     </Grid>
 </UserControl>

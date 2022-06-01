@@ -22,20 +22,24 @@ namespace BudgetPlanner.Infrastructure.Controls
 {
     public sealed partial class Operations : UserControl
     {
-        #region ListOperations : ObservableCollection<MoneyOperations> - List of operations
+        #region ListOperations : ObsCollection<MoneyOperations> - List of operations
 
         /// <summary>List of operations</summary>
         public static readonly DependencyProperty ListOperationsProperty =
             DependencyProperty.Register(
                 nameof(ListOperations),
-                typeof(ObservableCollection<MoneyOperations>),
+                typeof(ObsCollection<MoneyOperations>),
                 typeof(Operations),
-                new PropertyMetadata(default(ObservableCollection<MoneyOperations>)));
+                new PropertyMetadata(default(ObsCollection<MoneyOperations>)));
 
-        public ObservableCollection<MoneyOperations> ListOperations
+        public ObsCollection<MoneyOperations> ListOperations
         {
-            get { return (ObservableCollection<MoneyOperations>) GetValue(ListOperationsProperty); }
-            set { SetValue(ListOperationsProperty, value); }    
+            get { return (ObsCollection<MoneyOperations>) GetValue(ListOperationsProperty); }
+            set 
+            { 
+                SetValue(ListOperationsProperty, value);
+               // DataTable.ItemsSource = ListOperations;
+            }    
         }
 
         #endregion
@@ -43,7 +47,6 @@ namespace BudgetPlanner.Infrastructure.Controls
         public Operations()
         {
             this.InitializeComponent();
-            
         }
 
         private void DataTable_Sorting(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridColumnEventArgs e)
@@ -53,7 +56,7 @@ namespace BudgetPlanner.Infrastructure.Controls
 
         private void Operations_OnLoaded(object sender, RoutedEventArgs e)
         {
-            DataTable.ItemsSource = ListOperations;
+            //DataTable.ItemsSource = ListOperations;
         }
     }
 }

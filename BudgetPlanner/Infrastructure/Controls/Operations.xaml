@@ -62,6 +62,7 @@
                            RequestedTheme="Light"
                            Grid.RowSpan="2" Grid.Row="1"
                            IsReadOnly="True"
+                           ItemsSource="{x:Bind ListOperations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            Style="{StaticResource DataGridStyle}"
                            SelectionMode="Single">
             <uwpctrls:DataGrid.Columns>
@@ -69,7 +70,7 @@
 
                 <uwpctrls:DataGridTextColumn Header="Сумма" Binding="{Binding Sum}" Tag="Sum" />
 
-                <uwpctrls:DataGridTextColumn Header="Тип операции" Binding="{Binding Type,
+                <uwpctrls:DataGridTextColumn Header="Тип операции" Binding="{Binding   Type,
                     Converter={StaticResource BooleanToOperationTypeConverter}}" Tag="Type"/>
 
                 <uwpctrls:DataGridTextColumn Header="Вид операции" Binding="{Binding OperationCategory}" 

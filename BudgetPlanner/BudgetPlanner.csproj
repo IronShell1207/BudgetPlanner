@@ -153,6 +153,7 @@
     <Compile Include="Objects\NavMenuItem.cs" />
     <Compile Include="Objects\MoneyOperation.cs" />
     <Compile Include="Constants\OperationsCategories.cs" />
+    <Compile Include="Objects\ObsCollection.cs" />
     <Compile Include="Objects\TheDisposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

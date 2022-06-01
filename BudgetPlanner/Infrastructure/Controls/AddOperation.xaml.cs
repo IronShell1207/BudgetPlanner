@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -29,10 +30,6 @@ namespace BudgetPlanner.Infrastructure.Controls
             this.InitializeComponent();
         }
 
-        private void LinkTextBox_OnKeyUp(object sender, KeyRoutedEventArgs e)
-        {
-
-        }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -48,9 +45,16 @@ namespace BudgetPlanner.Infrastructure.Controls
             }
         }
 
-        private void LinkTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void SumTextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            //viewModel.OnPropertyChanged(nameof(viewModel.NewOperation));
-       }
+           
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+            if (string.IsNullOrWhiteSpace(sender.Text)) sender.Text = "0";
+        }
+
+        private void SumTextBox_OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
+        {   
+            if (string.IsNullOrWhiteSpace((sender as TextBox).Text)) (sender as TextBox).Text = "0";
+        }
     }
 }

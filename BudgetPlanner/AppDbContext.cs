@@ -43,7 +43,7 @@ namespace BudgetPlanner
                 List<double> operations = new List<double>();
                 connection.Open();
                 var operation = connection.CreateCommand();
-                operation.CommandText = $"SELECT Sum FROM Operations";
+                operation.CommandText = $"SELECT Sum FROM Operations ORDER BY DateTime DESC";
                 var reader = await operation.ExecuteReaderAsync();
                 if (reader.HasRows)
                 {
@@ -76,7 +76,7 @@ namespace BudgetPlanner
                 return operations;
             }
         }
-        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit = 10, int offset = 0 )
+        public async Task<List<MoneyOperations>> GetOperationsAsync(int limit = 50, int offset = 0 )
         {
             using (var connection = new SqliteConnection(ConnectionString))
             {
@@ -89,7 +89,7 @@ namespace BudgetPlanner
         {
             var operationsList = new List<MoneyOperations>();
             var command = connection.CreateCommand();
-            command.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations LIMIT {limit} OFFSET {offset}";
+            command.CommandText = $"SELECT id, operationcategory, sum, type, comment, datetime FROM Operations ORDER BY DateTime DESC LIMIT {limit} OFFSET {offset} ";
             var reader = await command.ExecuteReaderAsync();
             if (reader.HasRows)
             {

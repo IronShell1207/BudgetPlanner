@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.PointOfService;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using BudgetPlanner.Infrastructure.Converters;
+using BudgetPlanner.Infrastructure.Pages;
 using BudgetPlanner.Infrastructure.ViewModels.Base;
 using BudgetPlanner.Objects;
 using Microsoft.Toolkit.Mvvm;
@@ -19,10 +21,46 @@ namespace BudgetPlanner.Infrastructure.ViewModels
 {
     public class MainVM : ObservableObject
     {
+        #region Properties
 
-        public string UserName { get; set; } = "Имя пользователя";
-        public List<MoneyOperations> MoneyOperations { get; set; }
+        public string UserName { get; set; } = "Username";
+
+        public ObsCollection<MoneyOperations> MoneyOperations { get; set; } = new ObsCollection<MoneyOperations>()
+        {
+            new MoneyOperations()
+            {
+                Id = 0, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.RecievedCategories.First(), Sum = 230, Type = true
+            },
+            new MoneyOperations()
+            {
+                Id = 1, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.SpendCategories.First(), Sum = -330, Type = false
+            },
+            new MoneyOperations()
+            {
+                Id = 2, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
+            },
+            new MoneyOperations()
+            {
+                Id = 3, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
+            },
+            new MoneyOperations()
+            {
+                Id = 4, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.SpendCategories[3], Sum = -430, Type = false
+            },
+            new MoneyOperations()
+            {
+                Id = 5, Comment = "Покупка в ашане", DateTime = DateTime.Now,
+                OperationCategory = OperationsCategories.RecievedCategories[2], Sum = 230, Type = true
+            },
+        };
+
         private double _balance = 0;
+
         public double Balance
         {
             get => _balance;
@@ -34,42 +72,44 @@ namespace BudgetPlanner.Infrastructure.ViewModels
         }
 
         private double _todaysChange = 0;
+
         public double TodaysChange
         {
             get => _todaysChange;
-            set
-            {
-                SetProperty(ref _todaysChange, value);
-            }
+            set { SetProperty(ref _todaysChange, value); }
         }
+
         public string Currency { get; set; } = "$";
-
-        #region IncCommand
-
-        public ICommand IncCommand { get; }
-
-        private bool CanIncCommandExecute()
-        {
-            return true;
-        }
-
-        private async void OnIncCommandExecuting()
-        {
-            Balance++;
-            await Task.Delay(100);
-            UpdateBalance();
-            var newOpera = NewOperation;
-            MoneyOperations.Add(newOpera);
-        }
+        public List<string> OperationsTypes => OperationsCategories.OperationType;
+        public List<string> OperationKinds { get; set; } = OperationsCategories.RecievedCategories;
 
         #endregion
 
-        public List<string> OperationsTypes => OperationsCategories.OperationType;
+        private async Task<ContentDialogResult> ShowDialog(string title, string message)
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                CloseButtonText = "Ok"
+            };
+            return await dialog.ShowAsync();
+        }
 
-        public List<string> OperationKinds { get; set; } = OperationsCategories.RecievedCategories;
         #region AddNewOperation
 
-        public MoneyOperations NewOperation { get; set; } = new MoneyOperations();
+        private MoneyOperations _newOperation = new MoneyOperations();
+
+        public MoneyOperations NewOperation
+        {
+            get => _newOperation;
+            set
+            {
+                _newOperation = value;
+                OnPropertyChanged(nameof(NewOperation));
+            }
+        }
+
         public int SelectedOperationType { get; set; } = 0;
 
         public DateTimeOffset Date
@@ -90,6 +130,7 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                     NewOperation.DateTime.Millisecond);
             }
         }
+
         public TimeSpan Time
         {
             get
@@ -110,46 +151,41 @@ namespace BudgetPlanner.Infrastructure.ViewModels
                     dt.GetValueOrDefault(DateTime.MinValue).Millisecond);
             }
         }
+
         public int SelectedOperationKind { get; set; } = 0;
         public RelayCommand SaveNewOperationCommand { get; }
 
-        public bool CanSaveNewOperation()
+        private async void SaveNewOperation(object param)
         {
-            return true;
-        }
-        private async void SaveNewOperation()
-        {
-            NewOperation.Type = SelectedOperationType == 0 ? true : false;
-            NewOperation.OperationCategory = OperationKinds[SelectedOperationKind];
-            AppDbContext dbContext = new AppDbContext();
-            
-            var affectedRows = await dbContext.AddOperationAsync(NewOperation);
-            if (affectedRows > 0)
+            NewOperation.Type = SelectedOperationType == 0;
+            if (SelectedOperationKind > -1 && NewOperation.Sum != 0)
             {
-                var list = await dbContext.GetOperationsAsync(50);
-                MoneyOperations = list;
+                NewOperation.OperationCategory = OperationKinds[SelectedOperationKind];
+                AppDbContext dbContext = new AppDbContext();
+
+                var affectedRows = await dbContext.AddOperationAsync(NewOperation);
+
+                dbContext.Dispose();
+                if (affectedRows > 0)
+                {
+                    var result = await ShowDialog("Успех", "Данные успешно сохранены в БД!");
+                    UpdateBalance();
+                    DataUpdaterService(20);
+                }
             }
-            Balance++;
-            UpdateBalance();
-
-            dbContext.Dispose();
-
+            else
+            {
+                await ShowDialog("Ошибка",
+                    "Не удалось сохранить данные в БД, так как одно или несколько полей не заполнены!");
+            }
         }
+
         #endregion
 
-        private async void UpdateBalance()
+        public MainVM()
         {
-            using (AppDbContext dbContext = new AppDbContext())
-            {
-                var allOperations = await dbContext.GetAllMoneyMoves();
-                var todayOperations = await dbContext.GetMoneyMovesByDate(DateTime.Now);
-                Balance = 0;
-                TodaysChange = 0;
-                foreach (var operation in allOperations)
-                    Balance += operation;
-                foreach (var operation in todayOperations)
-                    TodaysChange += operation;
-            }
+            SaveNewOperationCommand = new RelayCommand(SaveNewOperation);
+            UpdateBalance();
         }
 
         /// <summary>
@@ -160,12 +196,36 @@ namespace BudgetPlanner.Infrastructure.ViewModels
             get { return _isInDetailsMode; }
             set { SetProperty(ref _isInDetailsMode, value); }
         }
+
         private bool _isInDetailsMode = false;
-        public MainVM()
+
+        public async void DataUpdaterService(int limit = 50)
         {
-            Task.Run(UpdateBalance);
-            SaveNewOperationCommand = new RelayCommand(SaveNewOperation, CanSaveNewOperation);
-            IncCommand = new RelayCommand(OnIncCommandExecuting, CanIncCommandExecute);
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+                var list = await dbContext.GetOperationsAsync(limit);
+                MoneyOperations.Clear();
+                foreach (var operation in list)
+                {
+                    MoneyOperations.Add(operation);
+                }
+                OnPropertyChanged(nameof(MoneyOperations));
+            }
+        }
+
+        public void UpdateBalance()
+        {
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+                var allOperations = dbContext.GetAllMoneyMoves().Result;
+                var todayOperations = dbContext.GetMoneyMovesByDate(DateTime.Now).Result;
+                Balance = 0;
+                TodaysChange = 0;
+                foreach (var operation in allOperations)
+                    Balance += operation;
+                foreach (var operation in todayOperations)
+                    TodaysChange += operation;
+            }
         }
     }
 }

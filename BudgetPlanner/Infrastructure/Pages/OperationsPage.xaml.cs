@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using BudgetPlanner.Infrastructure.ViewModels;
+using BudgetPlanner.Objects;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,12 +31,13 @@ namespace BudgetPlanner.Infrastructure.Pages
         }
         private async void OperationsPage_OnLoading(FrameworkElement sender, object args)
         {
-            using (AppDbContext dbContext = new AppDbContext())
-            {
+                ViewModel.DataUpdaterService(999);
+            //using (AppDbContext dbContext = new AppDbContext())
+            //{
                 
-              var list = await dbContext.GetOperationsAsync(50);
-              ViewModel.MoneyOperations = list;
-            }
+            //  var list = await dbContext.GetOperationsAsync(990);
+            //  ViewModel.MoneyOperations = new ObsCollection<MoneyOperations>(list);
+            //}
         }
     }
 }

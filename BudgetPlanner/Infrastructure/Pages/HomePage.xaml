@@ -11,15 +11,14 @@
     mc:Ignorable="d"
     Foreground="Black"
     FontFamily="Segoe UI"
+    Loading="HomePage_OnLoading"
     Background="White">
-<Page.DataContext>
-    <viewModels:MainVM/>
-</Page.DataContext>
+
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="300"/>
+            <ColumnDefinition Width="4*" MinWidth="200"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto" MinWidth="400"/>
+            <ColumnDefinition Width="8*" MinWidth="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
@@ -39,16 +38,15 @@
             </controls1:GridSplitter.RenderTransform>
         </controls1:GridSplitter>
         <controls:AddOperation Grid.Row="1" HorizontalContentAlignment="Center"></controls:AddOperation>
-        <StackPanel Grid.Column="1" Grid.Row="1">
-        <TextBlock Text="{Binding Balance, Mode=TwoWay}" Foreground="Black" FontSize="30"   ></TextBlock>
-            <Button Command="{Binding IncCommand, Mode=TwoWay}" Width="100" RequestedTheme="Light" Content="Press me"/>
-        </StackPanel>
+
         <controls:AccountInfo Grid.ColumnSpan="3" 
-                              Currency="{Binding Currency, Mode=TwoWay}"
-                              TodayBalanceChange="{Binding TodaysChange, Mode=TwoWay}"
-                              BalanceCurrent="{Binding Balance, Mode=TwoWay}"
-                              UserName="{Binding UserName, Mode=TwoWay}"/>
-        <controls1:DataGrid ItemsSource="{Binding MoneyOperations}" Grid.Row="1" Grid.Column="2" MinWidth="400" RequestedTheme="Light"></controls1:DataGrid>
-        <!--<controls:Operations ListOperations="{Binding MoneyOperations, Converter={StaticResource ListToCollectionConverter}}"  Grid.Row="1" Grid.Column="2" MinWidth="400"/>
-    --></Grid>
+                              Currency="{x:Bind ViewModel.Currency, Mode=TwoWay}"
+                              TodayBalanceChange="{x:Bind ViewModel.TodaysChange, Mode=TwoWay}"
+                              BalanceCurrent="{x:Bind ViewModel.Balance, Mode=TwoWay}"
+                              UserName="{x:Bind ViewModel.UserName, Mode=TwoWay}"/>
+
+        <controls:Operations ListOperations="{x:Bind ViewModel.MoneyOperations}" 
+                             Grid.Row="1"
+                             Grid.Column="2" MinWidth="400"/>
+    </Grid>
 </Page>

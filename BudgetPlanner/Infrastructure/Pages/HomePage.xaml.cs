@@ -21,13 +21,19 @@ namespace BudgetPlanner.Infrastructure.Pages
     
     public sealed partial class HomePage : Page
     {
-       // public MainVM ViewModel => AppShell.Current.MViewModel;
+        public MainVM ViewModel => AppShell.Current.MViewModel;
 
         public HomePage()
         {
             this.InitializeComponent();
         }
 
-
+        private async void HomePage_OnLoading(FrameworkElement sender, object args)
+        {
+            using (AppDbContext dbContext = new AppDbContext())
+            {
+                var list = await dbContext.GetOperationsAsync();
+            }
+        }
     }
 }

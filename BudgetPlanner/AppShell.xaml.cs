@@ -37,8 +37,6 @@ namespace BudgetPlanner
             this.InitializeComponent();
             Current = this;
             MenuCList.SelectedIndex = 0;
-            
-           
         }
 
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
@@ -78,16 +76,13 @@ namespace BudgetPlanner
             new NavMenuItem()
             {
                 Symbol = Symbol.Add,
-                Label = "Добавить операцию",
-               // DestPage = typeof(MasterDetailPage),
-               // Arguments = typeof(AddFeedView)
+                Label = "Добавить операцию"
             },
             new NavMenuItem()
             {
                 Symbol = Symbol.Edit,
-                Label = "Отредактировать операцию",
-                //DestPage = typeof(MasterDetailPage),
-                //Arguments = typeof(EditFeedsView)
+                Label = "Отредактировать операцию"
+
             }
         });
 
@@ -140,11 +135,7 @@ namespace BudgetPlanner
 
         private async void AppShell_OnLoading(FrameworkElement sender, object args)
         {
-            using (AppDbContext dbContext = new AppDbContext())
-            {
-                var list = await dbContext.GetOperationsAsync(10);
-                MViewModel. MoneyOperations = list;
-            }
+            MViewModel.DataUpdaterService();
         }
     }
 }

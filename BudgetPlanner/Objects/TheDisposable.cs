@@ -8,7 +8,7 @@ namespace BudgetPlanner.Objects
 {
     public abstract class TheDisposable : IDisposable
     {
-        public bool disposed = false;
+            public bool disposed = false;
         public void Dispose()
         {
             Dispose(true);
