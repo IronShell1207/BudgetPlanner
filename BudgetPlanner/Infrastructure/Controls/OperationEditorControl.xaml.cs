@@ -168,7 +168,7 @@ namespace BudgetPlanner.Infrastructure.Controls
         private void SumTextBox_OnBeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
            
-            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c) && c != '-' && c != '.');
         }
 
         private void SumTextBox_OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
