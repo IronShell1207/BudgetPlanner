@@ -51,7 +51,8 @@ namespace BudgetPlanner.Infrastructure.Pages
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SelectedIndexCombo != -1)
-                EditorControl.OpData = ViewModel.MoneyOperations[SelectedIndexCombo];
+                EditorControl.OpData =  ViewModel.MoneyOperations[SelectedIndexCombo];
+            
         }
     }
 }

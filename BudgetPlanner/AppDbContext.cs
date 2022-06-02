@@ -31,7 +31,7 @@ namespace BudgetPlanner
             Thread.CurrentThread.CurrentCulture = ci;
             var operation = connection.CreateCommand();
             var type = moneyMove.Type ? 1 : 0;
-            var sum = moneyMove.Type ? moneyMove.Sum : -moneyMove.Sum;
+            var sum = moneyMove.Type && moneyMove.Sum>0 ? moneyMove.Sum : -moneyMove.Sum;
             operation.CommandText = $"INSERT INTO Operations (OperationCategory, Sum, Type, Comment, DateTime) VALUES " +
                                     $"(\"{moneyMove.OperationCategory}\", \"{sum}\", \"{type}\", \"{moneyMove.Comment}\", \"{moneyMove.DateTime}\" )";
             return operation.ExecuteNonQuery();

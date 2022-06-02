@@ -37,7 +37,10 @@ namespace BudgetPlanner.Infrastructure.Controls
         public MoneyOperation OpData
         {
             get { return (MoneyOperation) GetValue(OpDataProperty); }
-            set { SetValue(OpDataProperty, value); }
+            set
+            {
+                SetValue(OpDataProperty, value);
+            }
         }
 
         #endregion
@@ -160,7 +163,16 @@ namespace BudgetPlanner.Infrastructure.Controls
             }
         }
 
-        public int SelectedOperationType { get; set; } = 0;
+        private int _selectedOpType = 0;
+        public int SelectedOperationType
+        {
+            get
+            {
+                if (OpData?.Type == false) return 1;
+                return 0;
+            }
+            set => OpData.Type = value == 0;
+        }
 
 
         public int SelectedOperationKind { get; set; } = 0;

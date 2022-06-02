@@ -77,7 +77,7 @@
                 <uwpctrls:DataGridTextColumn Header="Вид операции" Binding="{Binding OperationCategory}" 
                                              Tag="OperationCategory" />
 
-                <uwpctrls:DataGridTemplateColumn Header="Дата добавления" Tag="DateTime">
+                <uwpctrls:DataGridTemplateColumn Header="Дата операции" Tag="DateTime">
                     <uwpctrls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DateTime,

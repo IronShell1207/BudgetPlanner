@@ -17,7 +17,7 @@ namespace BudgetPlanner.Objects
         /// <summary>
         /// Type of operation - False is spend, True is cash in
         /// </summary>
-        public bool Type { get; set; } = false;
+        public bool Type { get; set; } = true;
         public string Comment { get; set; }
         public DateTime DateTime { get; set; } = DateTime.Now;
 
